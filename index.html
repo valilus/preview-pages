@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistem AI · Workshop LIVE — Vineri 20:00</title>
-<meta name="description" content="Vezi LIVE sistemul AI care aduce clienți premium automat. Workshop vineri 20:00. 17$.">
+<meta name="description" content="Descoperă LIVE cum un sistem cu AI transformă vizitatori obișnuiți în clienți premium. Workshop vineri 20:00. 17$.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 
@@ -16,29 +16,24 @@ fbq('track','PageView');
 </script>
 
 <style>
-/* ═══════════════════════════════════
-   RESET + ROOT
-═══════════════════════════════════ */
+/* ─── RESET + VARIABLES ─── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --black: #000000;
+  --black:   #000000;
   --near-black: #080808;
-  --bg: #0A0E1A;
-  --bg-card: #111827;
-  --border: #1a1a1a;
-  --border-subtle: #0f0f0f;
-  --green: #22C55E;
-  --green-glow: rgba(34,197,94,0.15);
-  --amber: #F59E0B;
-  --red: #EF4444;
-  --blue: #0EA5E9;
-  --purple: #A855F7;
-  --white: #F5F5F7;
-  --white-secondary: rgba(245,245,247,0.7);
-  --white-tertiary: rgba(245,245,247,0.4);
-  --white-faint: rgba(245,245,247,0.12);
-  --font: -apple-system, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --card:    #0d0d0d;
+  --border:  rgba(255,255,255,0.07);
+  --green:   #22C55E;
+  --amber:   #F59E0B;
+  --red:     #EF4444;
+  --blue:    #0EA5E9;
+  --white:   #F5F5F7;
+  --w2:      rgba(245,245,247,0.68);
+  --w3:      rgba(245,245,247,0.38);
+  --w4:      rgba(245,245,247,0.10);
+  --font:    -apple-system, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --pad:     max(24px, 5vw);
 }
 
 html { scroll-behavior: smooth; background: var(--black); }
@@ -47,2365 +42,821 @@ body {
   color: var(--white);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* ═══════════════════════════════════
-   SCROLL ANIMATIONS
-═══════════════════════════════════ */
+/* ─── ANIMATIONS ─── */
+@keyframes fadeDown { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:none; } }
+@keyframes fadeUp   { from { opacity:0; transform:translateY(22px);  } to { opacity:1; transform:none; } }
+@keyframes pulse    {
+  0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(239,68,68,.4); }
+  50%     { opacity:.7; box-shadow: 0 0 0 5px rgba(239,68,68,0); }
+}
+
 .reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  opacity: 0; transform: translateY(36px);
+  transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal.visible { opacity: 1; transform: none; }
 
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
-}
-.reveal-left.visible { opacity: 1; transform: translateX(0); }
-
-.reveal-right {
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
-}
-.reveal-right.visible { opacity: 1; transform: translateX(0); }
-
-.reveal-scale {
-  opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
-}
-.reveal-scale.visible { opacity: 1; transform: scale(1); }
-
-/* Staggered children */
-.stagger > *:nth-child(1) { transition-delay: 0ms; }
-.stagger > *:nth-child(2) { transition-delay: 80ms; }
+.stagger > *:nth-child(1) { transition-delay:   0ms; }
+.stagger > *:nth-child(2) { transition-delay:  80ms; }
 .stagger > *:nth-child(3) { transition-delay: 160ms; }
 .stagger > *:nth-child(4) { transition-delay: 240ms; }
 .stagger > *:nth-child(5) { transition-delay: 320ms; }
 .stagger > *:nth-child(6) { transition-delay: 400ms; }
 
-/* ═══════════════════════════════════
-   NAV
-═══════════════════════════════════ */
+/* ─── NAV ─── */
 nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 0 24px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px; padding: 0 var(--pad);
+  display: flex; align-items: center; justify-content: space-between;
   border-bottom: 1px solid transparent;
+  transition: background .4s, border-color .4s;
 }
-
 nav.scrolled {
-  background: rgba(0,0,0,0.82);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom-color: rgba(255,255,255,0.06);
+  background: rgba(0,0,0,.88);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: var(--border);
 }
-
 .nav-logo {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--white);
-  letter-spacing: -0.01em;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size: 15px; font-weight: 600; color: var(--white);
+  display: flex; align-items: center; gap: 10px;
 }
-
-.nav-logo-dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--green), #0EA5E9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
+.nav-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
 }
-
 .nav-cta {
-  background: var(--green);
-  color: #000;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 7px 18px;
-  border-radius: 20px;
-  text-decoration: none;
-  transition: background 0.2s;
-  white-space: nowrap;
+  background: var(--green); color: #000;
+  font-size: 13px; font-weight: 700; padding: 7px 18px;
+  border-radius: 20px; text-decoration: none; white-space: nowrap;
+  transition: background .2s;
 }
 .nav-cta:hover { background: #16A34A; }
 
-/* ═══════════════════════════════════
-   HERO
-═══════════════════════════════════ */
+/* ─── HERO ─── */
 .hero {
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 120px 24px 80px;
-  position: relative;
-  overflow: hidden;
+  padding: 120px var(--pad) 72px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; position: relative; overflow: hidden;
 }
-
-/* Radial glow behind hero */
 .hero::before {
   content: '';
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 600px;
-  background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 65%);
+  position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 700px;
+  background: radial-gradient(ellipse, rgba(34,197,94,.07) 0%, transparent 65%);
   pointer-events: none;
 }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 100px;
-  padding: 7px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--white-secondary);
-  margin-bottom: 32px;
-  letter-spacing: 0.01em;
-  animation: fadeDown 0.8s cubic-bezier(0.16,1,0.3,1) both;
+.live-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--w4); border: 1px solid var(--border);
+  border-radius: 100px; padding: 7px 18px;
+  font-size: 13px; font-weight: 500; color: var(--w2);
+  margin-bottom: 28px;
+  animation: fadeDown .7s cubic-bezier(.16,1,.3,1) both;
 }
-
 .live-dot {
-  width: 7px;
-  height: 7px;
-  background: var(--red);
-  border-radius: 50%;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--red); flex-shrink: 0;
   animation: pulse 1.5s ease infinite;
 }
 
-@keyframes pulse {
-  0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
-  50% { opacity:0.7; box-shadow: 0 0 0 4px rgba(239,68,68,0); }
+.eyebrow {
+  font-size: 13px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: 20px;
+  animation: fadeDown .7s .07s cubic-bezier(.16,1,.3,1) both;
 }
 
-.hero-eyebrow {
-  font-size: clamp(13px, 2vw, 15px);
-  font-weight: 500;
-  color: var(--green);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  animation: fadeDown 0.8s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+h1 {
+  font-size: clamp(50px, 8.5vw, 100px);
+  font-weight: 700; line-height: 1.03; letter-spacing: -.035em;
+  max-width: 860px; margin-bottom: 24px;
+  animation: fadeUp .9s .12s cubic-bezier(.16,1,.3,1) both;
 }
-
-.hero-pills {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 32px;
-  animation: fadeDown 0.8s 0.18s cubic-bezier(0.16,1,0.3,1) both;
+.white-line {
+  display: block;
+  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,.8) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-
-.hero-pill {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 100px;
-  padding: 5px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--white-secondary);
-  letter-spacing: 0.01em;
-}
-
-.hero-headline {
-  font-size: clamp(44px, 8vw, 96px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  max-width: 900px;
-  margin-bottom: 24px;
-  animation: fadeUp 1s 0.15s cubic-bezier(0.16,1,0.3,1) both;
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.75) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+.green-line { display: block; color: var(--green); }
 
 .hero-sub {
-  font-size: clamp(18px, 2.5vw, 23px);
-  font-weight: 400;
-  color: var(--white-secondary);
-  max-width: 600px;
-  line-height: 1.55;
-  margin-bottom: 40px;
-  animation: fadeUp 1s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+  font-size: clamp(17px, 2.2vw, 21px); font-weight: 400;
+  color: var(--w2); max-width: 580px; line-height: 1.65;
+  margin-bottom: 52px;
+  animation: fadeUp .9s .2s cubic-bezier(.16,1,.3,1) both;
 }
+.hero-sub strong { color: var(--white); font-weight: 600; }
 
-.hero-cta-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 56px;
-  animation: fadeUp 1s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+/* ─── VIDEO + FORM GRID ─── */
+.vsl-grid {
+  width: 100%; max-width: 1120px;
+  display: grid; grid-template-columns: 1fr 420px; gap: 40px; align-items: start;
+  animation: fadeUp .9s .28s cubic-bezier(.16,1,.3,1) both;
 }
 
-.cta-primary {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--green);
-  color: #000;
-  font-size: 17px;
-  font-weight: 700;
-  padding: 16px 40px;
-  border-radius: 980px;
-  text-decoration: none;
-  transition: all 0.2s;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  border: none;
-  font-family: var(--font);
-  min-width: 280px;
-  text-align: center;
+.video-wrap {
+  position: relative; padding-top: 56.25%;
+  border-radius: 22px; overflow: hidden;
+  background: #0d0d0d; border: 1px solid rgba(255,255,255,.07);
+  box-shadow: 0 24px 80px rgba(0,0,0,.55);
 }
-.cta-primary:hover {
-  background: #1DB954;
-  transform: scale(1.02);
-  box-shadow: 0 0 40px rgba(34,197,94,0.3);
+.video-wrap iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
 }
-.cta-primary:active { transform: scale(0.98); }
-
-.cta-secondary {
-  font-size: 15px;
-  color: var(--white-secondary);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.urgency-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.25);
-  border-radius: 100px;
-  padding: 5px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--amber);
-}
-
-/* Video block */
-.hero-video-wrap {
-  width: 100%;
-  max-width: 820px;
-  position: relative;
-  animation: fadeUp 1.2s 0.4s cubic-bezier(0.16,1,0.3,1) both;
-}
-
-.video-frame {
-  border-radius: 18px;
-  overflow: hidden;
-  position: relative;
-  padding-top: 56.25%;
-  background: #000;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.08),
-    0 40px 80px rgba(0,0,0,0.8),
-    0 0 120px rgba(34,197,94,0.04);
-}
-
-.video-frame iframe {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  border: 0;
-}
-
-/* Trust strip below video */
-.trust-strip {
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-  margin-top: 20px;
-  font-size: 13px;
-  color: var(--white-tertiary);
-  flex-wrap: wrap;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ═══════════════════════════════════
-   QUALIFICATION GATE
-   (filters buyers from curious)
-═══════════════════════════════════ */
-.gate-section {
-  background: #000;
-  padding: 120px 24px;
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.gate-label {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 20px;
-}
-
-.gate-headline {
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  max-width: 700px;
-  margin: 0 auto 24px;
-  background: linear-gradient(180deg, #FFF 0%, rgba(255,255,255,0.65) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gate-sub {
-  font-size: 18px;
-  color: var(--white-secondary);
-  max-width: 500px;
-  margin: 0 auto 60px;
-  line-height: 1.55;
-}
-
-.gate-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  max-width: 820px;
-  margin: 0 auto;
-  border-radius: 18px;
-  overflow: hidden;
-}
-
-@media (max-width: 600px) {
-  .gate-grid { grid-template-columns: 1fr; }
-}
-
-.gate-yes {
-  background: rgba(34,197,94,0.06);
-  border: 1px solid rgba(34,197,94,0.12);
-  padding: 28px;
-  border-radius: 0;
-}
-
-.gate-no {
-  background: rgba(239,68,68,0.04);
-  border: 1px solid rgba(239,68,68,0.1);
-  padding: 28px;
-  border-radius: 0;
-}
-
-.gate-title {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.gate-yes .gate-title { color: var(--green); }
-.gate-no .gate-title { color: var(--red); }
-
-.gate-item {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 13px 0;
-  font-size: 17px;
-  color: var(--white-secondary);
-  text-align: left;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  line-height: 1.5;
-}
-.gate-item:last-child { border-bottom: none; }
-
-.gate-yes .gate-item::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink:0; }
-.gate-no .gate-item::before { content: '✗'; color: var(--red); flex-shrink:0; }
-
-/* ═══════════════════════════════════
-   STATS SECTION
-═══════════════════════════════════ */
-.stats-section {
-  padding: 120px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  text-align: center;
-}
-
-.stats-label {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--white-tertiary);
-  margin-bottom: 80px;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  max-width: 900px;
-  margin: 0 auto;
-  background: rgba(255,255,255,0.05);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-@media (max-width: 640px) {
-  .stats-grid { grid-template-columns: 1fr; }
-}
-
-.stat-cell {
-  background: #000;
-  padding: 56px 40px;
-  text-align: center;
-}
-
-.stat-num {
-  font-size: clamp(64px, 8vw, 96px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  margin-bottom: 12px;
-}
-
-.stat-label {
-  font-size: 19px;
-  font-weight: 600;
-  color: var(--white-secondary);
-  margin-bottom: 8px;
-}
-
-.stat-sub {
-  font-size: 15px;
-  color: var(--white-tertiary);
-  line-height: 1.5;
-}
-
-/* Stats video embed */
-.stats-video-wrap {
-  max-width: 1000px;
-  margin: 80px auto 0;
-  border-radius: 18px;
-  overflow: hidden;
-  position: relative;
-  padding-top: 56.25%;
-  background: #000;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
-}
-
-.stats-video-wrap video {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-
-/* ═══════════════════════════════════
-   MANIFESTO
-═══════════════════════════════════ */
-.manifesto-section {
-  padding: 160px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.manifesto-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(34,197,94,0.04) 0%, transparent 100%),
-    radial-gradient(ellipse 40% 40% at 80% 100%, rgba(14,165,233,0.03) 0%, transparent 100%);
-  pointer-events: none;
-}
-
-.manifesto-text {
-  font-size: clamp(24px, 4.5vw, 48px);
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
-  max-width: 900px;
-  margin: 0 auto;
-  color: var(--white-secondary);
-}
-
-.manifesto-text strong {
-  color: var(--white);
-  font-weight: 700;
-}
-
-.manifesto-text .highlight {
-  color: var(--green);
-}
-
-/* ═══════════════════════════════════
-   FEATURES
-═══════════════════════════════════ */
-.features-section {
-  padding: 120px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.section-eyebrow {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--green);
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.section-headline {
-  font-size: clamp(32px, 5vw, 52px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 80px;
-  background: linear-gradient(180deg, #FFF 0%, rgba(255,255,255,0.7) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Feature rows — alternating */
-.feature-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-  max-width: 1100px;
-  margin: 0 auto 120px;
-}
-
-.feature-row:last-child { margin-bottom: 0; }
-
-.feature-row.reverse { direction: rtl; }
-.feature-row.reverse > * { direction: ltr; }
-
-@media (max-width: 760px) {
-  .feature-row { grid-template-columns: 1fr; gap: 40px; }
-  .feature-row.reverse { direction: ltr; }
-}
-
-.feature-text { }
-
-.feature-number {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--white-tertiary);
-  margin-bottom: 16px;
-}
-
-.feature-title {
-  font-size: clamp(26px, 3.5vw, 38px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin-bottom: 16px;
-  color: var(--white);
-}
-
-.feature-body {
-  font-size: 19px;
-  color: var(--white-secondary);
-  line-height: 1.65;
-  margin-bottom: 24px;
-}
-
-.feature-detail {
-  font-size: 16px;
-  color: var(--white-tertiary);
-  line-height: 1.65;
-  border-left: 2px solid var(--green);
-  padding-left: 16px;
-}
-
-.feature-visual {
-  background: #0d0d0d;
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 20px;
-  aspect-ratio: 4/3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-visual::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34,197,94,0.04) 0%, transparent 70%);
-}
-
-/* Mini UI mockups inside feature visuals */
-.mini-ui {
-  width: 85%;
-  font-size: 12px;
-  position: relative;
-  z-index: 1;
-}
-
-.mini-ui-header {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 10px 10px 0 0;
-  padding: 10px 16px;
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.mini-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-.mini-ui-body {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-top: none;
-  border-radius: 0 0 10px 10px;
-  padding: 14px;
-}
-
-.mini-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 7px;
-  margin-bottom: 4px;
-  font-size: 11px;
-  color: rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.02);
-}
-
-.mini-badge {
-  padding: 2px 8px;
-  border-radius: 100px;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.badge-green { background: rgba(34,197,94,0.15); color: #22C55E; }
-.badge-blue { background: rgba(14,165,233,0.15); color: #0EA5E9; }
-.badge-amber { background: rgba(245,158,11,0.15); color: #F59E0B; }
-.badge-purple { background: rgba(168,85,247,0.15); color: #A855F7; }
-
-/* Score bar */
-.score-bar-wrap { margin: 8px 0; }
-.score-bar-label { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
-.score-bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
-.score-bar-fill { height: 100%; border-radius: 100px; }
-
-/* WA bubble */
-.wa-bubble {
-  background: rgba(37,211,102,0.08);
-  border: 1px solid rgba(37,211,102,0.2);
-  border-radius: 12px;
-  border-bottom-left-radius: 3px;
-  padding: 10px 14px;
-  font-size: 11px;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.5;
-  margin-bottom: 8px;
-}
-
-/* Campaign AI mockup */
-.ai-block {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 6px;
-  font-size: 10px;
-  color: rgba(255,255,255,0.5);
-}
-
-/* ═══════════════════════════════════
-   SYSTEM FLOW VIDEO
-═══════════════════════════════════ */
-.flow-section {
-  padding: 120px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.flow-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-@media (max-width: 760px) {
-  .flow-inner { grid-template-columns: 1fr; }
-}
-
-.flow-video-wrap {
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  padding-top: 177.78%; /* 9:16 */
-  background: #000;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 40px 80px rgba(0,0,0,0.6);
-}
-
-.flow-video-wrap video {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-
-.flow-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.flow-step {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-.flow-step-num {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(34,197,94,0.1);
-  border: 1px solid rgba(34,197,94,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--green);
-  flex-shrink: 0;
-}
-
-.flow-step-text h4 {
-  font-size: 19px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.flow-step-text p {
-  font-size: 16px;
-  color: var(--white-secondary);
-  line-height: 1.6;
-}
-
-/* ═══════════════════════════════════
-   TESTIMONIALS
-═══════════════════════════════════ */
-.testi-section {
-  padding: 120px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  overflow: hidden;
-}
-
-.testi-scroll {
-  display: flex;
-  gap: 16px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-@media (max-width: 740px) {
-  .testi-scroll { flex-direction: column; }
-}
-
-.testi-card {
-  flex: 1;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 18px;
-  padding: 28px;
-  transition: border-color 0.3s, background 0.3s;
-  min-width: 0;
-}
-.testi-card:hover {
-  border-color: rgba(34,197,94,0.2);
-  background: rgba(34,197,94,0.02);
-}
-
-.testi-stars { color: #F59E0B; font-size: 16px; margin-bottom: 16px; letter-spacing: 2px; }
-
-.testi-quote {
-  font-size: 17px;
-  color: var(--white-secondary);
-  line-height: 1.7;
-  margin-bottom: 24px;
-  font-style: italic;
-}
-
-.testi-author {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.testi-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--green), #0EA5E9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  font-weight: 800;
-  color: #000;
-  flex-shrink: 0;
-}
-
-.testi-name {
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.testi-role {
-  font-size: 14px;
-  color: var(--white-tertiary);
-  margin-top: 2px;
-}
-
-/* ═══════════════════════════════════
-   HOST
-═══════════════════════════════════ */
-.host-section {
-  padding: 120px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.host-inner {
-  max-width: 720px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.host-avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--green), #0EA5E9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  margin: 0 auto 24px;
-}
-
-.host-name {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
-}
-
-.host-title {
-  font-size: 15px;
-  color: var(--green);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 28px;
-}
-
-.host-bio {
-  font-size: 19px;
-  color: var(--white-secondary);
-  line-height: 1.75;
-}
-
-/* ═══════════════════════════════════
-   OFFER + CHECKOUT
-═══════════════════════════════════ */
-.offer-section {
-  padding: 120px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.offer-layout {
-  display: grid;
-  grid-template-columns: 55fr 45fr;
-  gap: 56px;
-  max-width: 1100px;
-  margin: 0 auto;
-  align-items: start;
-}
-
-@media (max-width: 860px) {
-  .offer-layout { grid-template-columns: 1fr; }
-}
-
-/* Value stack */
-.value-stack { }
-
-.value-item {
-  display: flex;
-  gap: 16px;
-  padding: 22px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.value-item:last-child { border-bottom: none; }
-
-.value-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-  margin-top: 2px;
-  color: var(--green);
-  font-weight: 700;
-}
-
-.value-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  letter-spacing: -0.01em;
-}
-
-.value-desc {
-  font-size: 16px;
-  color: var(--white-secondary);
-  line-height: 1.6;
-}
-
-.price-block {
-  margin-top: 32px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.price-old {
-  font-size: 16px;
-  color: var(--white-tertiary);
-  text-decoration: line-through;
-  margin-bottom: 4px;
-}
-
-.price-new {
-  font-size: 52px;
-  font-weight: 800;
-  color: var(--green);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-bottom: 20px;
-}
-
-.progress-wrap {
-  background: rgba(255,255,255,0.06);
-  border-radius: 100px;
-  height: 8px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--amber), #F97316);
-  border-radius: 100px;
-  width: 86%;
-}
-.progress-label {
-  font-size: 13px;
-  color: var(--amber);
-  font-weight: 600;
+.video-meta {
+  display: flex; justify-content: center; gap: 18px;
+  font-size: 12px; color: var(--w3); margin-top: 16px; flex-wrap: wrap;
 }
 
-/* Checkout card */
+/* ─── CHECKOUT CARD ─── */
 .checkout-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 24px;
-  padding: 36px;
-  position: sticky;
-  top: 72px;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-  backdrop-filter: blur(10px);
+  background: var(--card); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px; padding: 30px 26px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  position: sticky; top: 70px;
+}
+.card-title { font-size: 20px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 3px; }
+.card-sub   { font-size: 13px; color: var(--w3); margin-bottom: 22px; }
+
+.card-cd {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 0; margin-bottom: 22px;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.cd-unit { text-align: center; min-width: 52px; }
+.cd-num  { font-size: 30px; font-weight: 800; letter-spacing: -.04em; color: var(--white); line-height: 1; display: block; }
+.cd-unit:last-child .cd-num { color: var(--green); }
+.cd-lbl  { font-size: 9px; color: var(--w3); text-transform: uppercase; letter-spacing: .08em; margin-top: 3px; display: block; }
+.cd-sep  { font-size: 22px; color: var(--w3); font-weight: 300; line-height: 1.2; }
+
+.step-dots { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--w3);
+  transition: all .3s; flex-shrink: 0;
+}
+.dot.active { background: var(--green); border-color: var(--green); color: #000; }
+.dot.done   { background: rgba(34,197,94,.15); border-color: var(--green); color: var(--green); }
+.dot-line   { flex: 1; height: 1px; background: var(--border); transition: background .3s; }
+.dot-line.done { background: var(--green); }
+.step-lbl   { font-size: 12px; color: var(--w3); margin-bottom: 16px; }
+
+.fg { margin-bottom: 13px; }
+.fg label { font-size: 12px; font-weight: 600; color: var(--w3); display: block; margin-bottom: 6px; letter-spacing: .02em; }
+.fg input {
+  width: 100%; background: rgba(255,255,255,.04);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 13px 15px; color: var(--white);
+  font-size: 15px; font-family: var(--font);
+  transition: border-color .2s; outline: none;
+}
+.fg input::placeholder { color: var(--w3); }
+.fg input:focus  { border-color: rgba(34,197,94,.45); }
+.fg input.error  { border-color: var(--red); }
+.ferr { font-size: 12px; color: var(--red); margin-top: 4px; display: none; }
+
+.price-row {
+  display: flex; align-items: center; gap: 10px; margin: 16px 0 0;
+}
+.price-big { font-size: 30px; font-weight: 800; color: var(--green); letter-spacing: -.03em; }
+.price-old { font-size: 14px; color: var(--w3); text-decoration: line-through; }
+.price-tag {
+  margin-left: auto;
+  background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.25);
+  border-radius: 20px; padding: 3px 10px; font-size: 12px; color: var(--amber); font-weight: 600;
 }
 
-.checkout-card-title {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
+.btn-green {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; background: var(--green); color: #000;
+  font-size: 16px; font-weight: 700; padding: 15px 20px;
+  border-radius: 980px; border: none; cursor: pointer; font-family: var(--font);
+  letter-spacing: -.01em; text-decoration: none;
+  transition: all .2s; margin-top: 14px;
+}
+.btn-green:hover { background: #1DB954; box-shadow: 0 0 32px rgba(34,197,94,.25); transform: scale(1.01); }
+.btn-green:active { transform: scale(.99); }
+a.btn-green { display: inline-flex; }
+
+.card-trust {
+  display: flex; justify-content: center; gap: 10px;
+  font-size: 11px; color: var(--w3); margin-top: 13px; flex-wrap: wrap;
 }
 
-.checkout-card-sub {
-  font-size: 14px;
-  color: var(--white-tertiary);
-  margin-bottom: 28px;
+.order-box {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border);
+  border-radius: 14px; padding: 14px 16px; margin-bottom: 14px;
 }
-
-/* Step indicator */
-.step-indicator {
-  display: flex;
-  align-items: center;
-  margin-bottom: 28px;
-  gap: 0;
+.orow {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--w2); padding: 5px 0;
+  border-bottom: 1px solid var(--border);
 }
+.orow:last-child { border-bottom: none; font-size: 15px; font-weight: 700; color: var(--white); }
+.orow:last-child span:last-child { color: var(--green); }
 
-.step-dot {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--white-tertiary);
-  flex-shrink: 0;
-  transition: all 0.3s;
+.sf { margin-bottom: 13px; }
+.sf-lbl  { font-size: 12px; font-weight: 600; color: var(--w3); margin-bottom: 6px; letter-spacing: .02em; }
+.sf-mock {
+  background: rgba(255,255,255,.04); border: 1px solid var(--border);
+  border-radius: 12px; padding: 13px 15px; font-size: 15px; color: var(--w3);
 }
-.step-dot.active { background: var(--green); border-color: var(--green); color: #000; }
-.step-dot.done { background: var(--green); border-color: var(--green); color: #000; }
-
-.step-connector {
-  flex: 1;
-  height: 1.5px;
-  background: rgba(255,255,255,0.08);
-  transition: background 0.3s;
-}
-.step-connector.done { background: var(--green); }
-
-.step-label-text {
-  font-size: 12px;
-  color: var(--white-tertiary);
-  margin-bottom: 24px;
-}
-
-/* Form */
-.form-group { margin-bottom: 14px; }
-
-.form-group label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--white-tertiary);
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.form-group input {
-  width: 100%;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px;
-  padding: 12px 16px;
-  font-size: 15px;
-  color: var(--white);
-  font-family: var(--font);
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-}
-
-.form-group input:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.08);
-}
-
-.form-group input::placeholder { color: rgba(255,255,255,0.2); }
-.form-group input.error { border-color: rgba(239,68,68,0.6); }
-
-.field-error {
-  font-size: 12px;
-  color: var(--red);
-  margin-top: 4px;
-  display: none;
-}
-
-/* Order summary */
-.order-summary {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
-
-.order-title { font-weight: 700; font-size: 14px; margin-bottom: 10px; }
-.order-check { font-size: 13px; color: var(--white-secondary); display: flex; gap: 6px; margin-bottom: 5px; }
-.order-total {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  margin-top: 10px; padding-top: 10px;
-  display: flex; justify-content: space-between;
-  font-size: 17px; font-weight: 800;
-}
-
-/* Stripe placeholder */
-.stripe-field-group {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  padding: 14px;
-  margin-bottom: 14px;
-}
-
-.stripe-lbl {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--white-tertiary);
-  margin-bottom: 6px;
-}
-
-.stripe-mock {
-  font-size: 14px;
-  color: rgba(255,255,255,0.2);
-}
-
-.stripe-row { display: flex; gap: 10px; }
-.stripe-row .stripe-field-group { flex: 1; margin-bottom: 0; }
-
-.trust-badges {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  font-size: 11px;
-  color: var(--white-tertiary);
-  margin-top: 14px;
-  flex-wrap: wrap;
-}
-
-/* ═══════════════════════════════════
-   FAQ
-═══════════════════════════════════ */
-.faq-section {
-  padding: 120px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.faq-list {
-  max-width: 720px;
-  margin: 64px auto 0;
-}
-
-.faq-item {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.faq-q {
-  width: 100%;
-  background: none;
-  border: none;
-  color: var(--white);
-  font-family: var(--font);
-  font-size: 17px;
-  font-weight: 500;
-  text-align: left;
-  padding: 22px 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  letter-spacing: -0.01em;
-  transition: color 0.2s;
-}
-
-.faq-q:hover { color: var(--white-secondary); }
-
-.faq-arrow {
-  color: var(--white-tertiary);
-  font-size: 18px;
-  flex-shrink: 0;
-  transition: transform 0.3s, color 0.2s;
-}
-
-.faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--green); }
-
-.faq-a {
-  font-size: 17px;
-  color: var(--white-secondary);
-  line-height: 1.7;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.3s;
-}
-
-.faq-item.open .faq-a {
-  max-height: 400px;
-  padding-bottom: 22px;
-}
-
-/* ═══════════════════════════════════
-   BOTTOM CTA
-═══════════════════════════════════ */
-.bottom-cta {
-  padding: 160px 24px;
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.bottom-cta::before {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 400px;
-  background: radial-gradient(ellipse, rgba(34,197,94,0.07) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.bottom-headline {
-  font-size: clamp(40px, 6vw, 72px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  max-width: 700px;
-  margin: 0 auto 24px;
-  background: linear-gradient(180deg, #FFF 0%, rgba(255,255,255,0.65) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ═══════════════════════════════════
-   FOOTER
-═══════════════════════════════════ */
-footer {
-  border-top: 1px solid rgba(255,255,255,0.05);
-  padding: 40px 24px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--white-tertiary);
-  line-height: 2;
-}
-
-footer a { color: var(--white-tertiary); text-decoration: none; }
-footer a:hover { color: var(--white-secondary); }
-
-/* ═══════════════════════════════════
-   STICKY MOBILE CTA BAR
-═══════════════════════════════════ */
-.sticky-mobile-cta {
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  z-index: 200;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  background: rgba(0,0,0,0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(34,197,94,0.2);
-  box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
-}
-
-.sticky-mobile-cta a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: var(--green);
-  color: #000;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 14px 20px;
-  border-radius: 980px;
-  text-decoration: none;
-  letter-spacing: -0.01em;
-  width: 100%;
-}
-
-.sticky-mobile-cta .sticky-price {
-  background: rgba(0,0,0,0.2);
-  border-radius: 20px;
-  padding: 2px 8px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-@media (max-width: 768px) {
-  .sticky-mobile-cta { display: block; }
-  body { padding-bottom: 80px; }
-}
-
-/* ═══════════════════════════════════
-   3 SECRETS SECTION
-═══════════════════════════════════ */
-.secrets-section {
-  padding: 120px 24px;
-  background: var(--near-black);
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.secrets-grid {
-  max-width: 900px;
-  margin: 64px auto 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .secrets-grid { grid-template-columns: 1fr; gap: 20px; }
-  .secrets-section { padding: 72px 20px; }
-}
-
-.secret-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 20px;
-  padding: 32px 28px;
-  position: relative;
-  overflow: hidden;
-}
-
-.secret-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--green), #0EA5E9);
-}
-
-.secret-num {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 16px;
-}
-
-.secret-title {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--white);
-  line-height: 1.4;
-  margin-bottom: 12px;
-  letter-spacing: -0.01em;
-}
-
-.secret-body {
-  font-size: 15px;
-  color: var(--white-secondary);
-  line-height: 1.65;
-}
-
-/* ═══════════════════════════════════
-   STEP TRANSITION
-═══════════════════════════════════ */
+.sf-row { display: flex; gap: 10px; }
+.sf-row .sf { flex: 1; }
 #step2 { display: none; }
 
-/* ═══════════════════════════════════
-   MOBILE
-═══════════════════════════════════ */
+/* ─── SECTION BASE ─── */
+.section {
+  padding: 100px var(--pad);
+  border-top: 1px solid var(--border);
+}
+.section.alt { background: var(--near-black); }
+
+.s-label {
+  text-align: center; font-size: 12px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--green); margin-bottom: 14px;
+}
+.s-title {
+  text-align: center;
+  font-size: clamp(32px, 4.5vw, 54px); font-weight: 700;
+  letter-spacing: -.03em; line-height: 1.08; margin-bottom: 56px;
+}
+
+/* ─── INCLUDED ─── */
+.inc-grid {
+  max-width: 880px; margin: 0 auto 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.inc-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; padding: 20px 22px;
+}
+.inc-item.bonus { border-color: rgba(34,197,94,.2); background: rgba(34,197,94,.04); }
+.inc-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.inc-name { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; letter-spacing: -.01em; }
+.inc-item.bonus .inc-name { color: var(--green); }
+.inc-desc { font-size: 13px; color: var(--w3); line-height: 1.55; }
+
+.price-cta-block {
+  max-width: 460px; margin: 0 auto; text-align: center;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 24px; padding: 36px 32px;
+}
+.strike { font-size: 14px; color: var(--w3); margin-bottom: 6px; }
+.p-big  { font-size: 72px; font-weight: 800; color: var(--green); letter-spacing: -.05em; line-height: 1; margin-bottom: 6px; }
+.p-note { font-size: 14px; color: var(--w3); margin-bottom: 20px; }
+.bar-wrap { background: rgba(255,255,255,.06); border-radius: 100px; height: 5px; margin-bottom: 8px; overflow: hidden; }
+.bar-fill { height: 100%; width: 86%; background: var(--green); border-radius: 100px; }
+.bar-lbl  { font-size: 12px; color: var(--amber); margin-bottom: 24px; }
+
+/* ─── STATS ─── */
+.stats-grid {
+  max-width: 780px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.stat-cell {
+  text-align: center; padding: 48px 20px;
+  border-right: 1px solid var(--border);
+}
+.stat-cell:last-child { border-right: none; }
+.stat-n { font-size: clamp(52px, 8vw, 80px); font-weight: 800; letter-spacing: -.04em; line-height: 1; margin-bottom: 8px; }
+.stat-k { font-size: 15px; color: var(--w2); font-weight: 500; }
+.stat-d { font-size: 12px; color: var(--w3); margin-top: 4px; }
+
+/* ─── TESTIMONIALS ─── */
+.testi-grid {
+  max-width: 880px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.testi-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px 24px;
+}
+.stars  { color: var(--amber); font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+.quote  { font-size: 15px; color: var(--w2); line-height: 1.72; margin-bottom: 22px; }
+.quote strong { color: var(--white); }
+.t-author { display: flex; align-items: center; gap: 12px; }
+.t-avatar {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: #000;
+}
+.t-name { font-size: 14px; font-weight: 600; }
+.t-role { font-size: 12px; color: var(--w3); }
+
+/* ─── HOST ─── */
+.host-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+.host-av  { font-size: 56px; margin-bottom: 16px; }
+.host-n   { font-size: 28px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 4px; }
+.host-r   { font-size: 14px; color: var(--green); margin-bottom: 28px; }
+.host-bio { font-size: 17px; color: var(--w2); line-height: 1.75; }
+.host-bio strong { color: var(--white); }
+
+/* ─── FAQ ─── */
+.faq-list { max-width: 660px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%; background: none; border: none; color: var(--white);
+  font-family: var(--font); font-size: 17px; font-weight: 500; text-align: left;
+  padding: 22px 0; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  letter-spacing: -.01em;
+}
+.faq-arr { color: var(--w3); font-size: 20px; flex-shrink: 0; transition: transform .3s, color .2s; }
+.faq-item.open .faq-arr { transform: rotate(45deg); color: var(--green); }
+.faq-a {
+  font-size: 16px; color: var(--w2); line-height: 1.72;
+  max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
+
+/* ─── BOTTOM CTA ─── */
+.btm-cta {
+  padding: 140px var(--pad); text-align: center;
+  position: relative; overflow: hidden; border-top: 1px solid var(--border);
+}
+.btm-cta::before {
+  content: '';
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse, rgba(34,197,94,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.btm-headline {
+  font-size: clamp(38px, 6vw, 68px); font-weight: 700;
+  letter-spacing: -.03em; line-height: 1.06;
+  max-width: 640px; margin: 0 auto 20px;
+}
+.btm-headline span { color: var(--green); }
+.btm-sub {
+  font-size: 17px; color: var(--w2); max-width: 460px;
+  margin: 0 auto 40px; line-height: 1.65;
+}
+.trust-row {
+  display: flex; justify-content: center; gap: 16px;
+  font-size: 12px; color: var(--w3); flex-wrap: wrap; margin-top: 18px;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px var(--pad); text-align: center;
+  font-size: 13px; color: var(--w3); line-height: 2;
+}
+footer a { color: var(--w3); text-decoration: none; }
+footer a:hover { color: var(--w2); }
+
+/* ─── STICKY MOBILE BAR ─── */
+.sticky-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(0,0,0,.96);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(34,197,94,.2);
+  box-shadow: 0 -8px 40px rgba(0,0,0,.7);
+  transition: opacity .3s;
+}
+.sticky-bar a {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--green); color: #000;
+  font-size: 16px; font-weight: 700; padding: 14px;
+  border-radius: 980px; text-decoration: none; width: 100%;
+}
+.s-tag {
+  background: rgba(0,0,0,.15); border-radius: 20px;
+  padding: 2px 10px; font-size: 14px; font-weight: 800;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 940px) {
+  .vsl-grid { grid-template-columns: 1fr; max-width: 600px; gap: 28px; }
+  .checkout-card { position: static; }
+}
+@media (max-width: 640px) {
+  .inc-grid   { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-cell  { border-right: none; border-bottom: 1px solid var(--border); padding: 32px 20px; }
+  .stat-cell:last-child { border-bottom: none; }
+}
 @media (max-width: 768px) {
-  /* Secțiuni — padding vertical redus */
-  .gate-section,
-  .stats-section,
-  .features-section,
-  .flow-section,
-  .testi-section,
-  .host-section,
-  .offer-section,
-  .faq-section { padding: 72px 20px; }
-
-  .manifesto-section { padding: 80px 20px; }
-  .bottom-cta { padding: 80px 20px; }
-
-  /* Section headline margin mai mic */
-  .section-headline { margin-bottom: 48px; }
-
-  /* Feature rows */
-  .feature-row { margin-bottom: 64px; }
-
-  /* Flow steps gap mai mic */
-  .flow-steps { gap: 24px; }
-
-  /* Testi cards stacked */
-  .testi-scroll { flex-direction: column; }
-  .testi-card { padding: 22px; }
-
-  /* Offer layout stacked */
-  .offer-layout { gap: 40px; }
-
-  /* Checkout */
-  .checkout-card { padding: 22px; border-radius: 20px; }
-
-  /* Stats grid stacked */
-  .stat-cell { padding: 40px 24px; }
-  .stat-num { font-size: clamp(52px, 14vw, 80px); }
-
-  /* Gate grid */
-  .gate-grid { grid-template-columns: 1fr; }
-  .gate-yes, .gate-no { padding: 22px; }
-
-  /* Hero */
-  .hero { padding: 100px 20px 60px; }
-  .hero-cta-group { margin-bottom: 36px; }
-  .hero-video-wrap { max-width: 100%; }
-  .hero-pills { gap: 6px; }
-  .hero-pill { font-size: 12px; padding: 4px 12px; }
-
-  /* Nav */
+  .hero   { padding: 100px 20px 56px; }
+  .section, .btm-cta { padding: 72px 20px; }
   nav { padding: 0 16px; }
-
-  /* CTA */
-  .cta-primary { font-size: 15px; padding: 14px 24px; min-width: 240px; }
-
-  /* Host */
-  .host-inner { padding: 0 4px; }
-
-  /* Flow inner stacked */
-  .flow-inner { grid-template-columns: 1fr; gap: 48px; }
-  .flow-video-wrap { max-width: 280px; margin: 0 auto; }
-
-  /* Manifesto */
-  .manifesto-text { font-size: clamp(20px, 5vw, 32px); }
-
-  /* Trust strip */
-  .trust-strip { font-size: 13px; gap: 10px; }
-
-  /* Bottom CTA */
-  .bottom-headline { font-size: clamp(36px, 10vw, 56px); }
+  .sticky-bar { display: block; }
+  body { padding-bottom: 76px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════
-     STICKY NAV
-══════════════════════ -->
+<!-- ── NAV ── -->
 <nav id="nav">
   <div class="nav-logo">
-    <div class="nav-logo-dot">⚡</div>
+    <div class="nav-icon">⚡</div>
     Clubul Experților
   </div>
-  <a href="#checkout" class="nav-cta">Rezervă — 17$ (<span id="nav-spots">7</span> locuri)</a>
+  <a href="#checkout" class="nav-cta">Rezervă — 17$</a>
 </nav>
 
-<!-- ══════════════════════
-     HERO
-══════════════════════ -->
+<!-- ── HERO ── -->
 <section class="hero">
-  <div class="hero-badge">
+
+  <div class="live-badge">
     <span class="live-dot"></span>
-    Workshop LIVE · Vineri la 20:00 RO — <span id="badge-date" style="color:var(--green);font-weight:700">locuri limitate</span>
+    Workshop LIVE · Vineri 20:00 · <span style="color:var(--green);font-weight:700">locuri limitate</span>
   </div>
 
-  <div class="hero-eyebrow">Pentru antreprenori care fac minim 5.000€/lună</div>
+  <p class="eyebrow">Pentru antreprenori care fac minim 5.000€/lună</p>
 
-  <div class="hero-pills">
-    <span class="hero-pill">coaching</span>
-    <span class="hero-pill">cursuri online</span>
-    <span class="hero-pill">programe high-ticket</span>
-    <span class="hero-pill">servicii premium</span>
-    <span class="hero-pill">consultanță</span>
-  </div>
-
-  <h1 class="hero-headline">Acum 30 de secunde<br>a intrat un lead în sistem.<br><span style="color:var(--green)">Vineri seară, îți arăt ce s-a întâmplat.</span></h1>
+  <h1>
+    <span class="white-line">Afacerea ta vinde</span>
+    <span class="green-line">chiar și când nu ești acolo.</span>
+  </h1>
 
   <p class="hero-sub">
-    Demo live, sistem deschis, date reale — 90 de minute. Pleci cu template-urile gata de implementat luni dimineață.
+    Descoperă LIVE cum <strong>ȘI TU</strong> poți avea sistemul cu AI care transformă vizitatori obișnuiți în clienți premium — fără să pierzi timpul cu leaduri reci.
   </p>
 
-  <!-- CTA above video — above the fold -->
-  <div class="hero-cta-group">
-    <a href="#checkout" class="cta-primary">
-      DA, VREAU SĂ VĂD LIVE SISTEMUL →
-    </a>
-    <div class="cta-secondary">
-      <span class="urgency-pill">⚡ <span id="spots-hero">7</span> locuri rămase la 17$ · Prețul crește sâmbătă</span>
+  <!-- VIDEO + FORM -->
+  <div class="vsl-grid" id="checkout">
+
+    <!-- Video -->
+    <div>
+      <div class="video-wrap">
+        <iframe
+          src="https://player.mediadelivery.net/embed/602296/2437d6fc-61b7-41e6-9127-025147463d7b?autoplay=true&loop=false&muted=false&preload=true&responsive=true"
+          loading="lazy"
+          allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+          allowfullscreen="true">
+        </iframe>
+      </div>
+      <div class="video-meta">
+        <span>📅 Vineri 20:00 RO</span>
+        <span>·</span>
+        <span>🔒 Stripe · SSL</span>
+        <span>·</span>
+        <span>↩️ Garanție 100% — banii înapoi fără întrebări</span>
+      </div>
+    </div>
+
+    <!-- Checkout card -->
+    <div class="checkout-card">
+      <div class="card-title">Rezervă-ți locul</div>
+      <div class="card-sub">Workshop LIVE · Vineri 20:00 RO</div>
+
+      <!-- Countdown -->
+      <div class="card-cd">
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-h">00</span>
+          <span class="cd-lbl">ore</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-m">00</span>
+          <span class="cd-lbl">min</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-s">00</span>
+          <span class="cd-lbl">sec</span>
+        </div>
+      </div>
+
+      <!-- Steps -->
+      <div class="step-dots">
+        <div class="dot active" id="dot1">1</div>
+        <div class="dot-line" id="conn1"></div>
+        <div class="dot" id="dot2">2</div>
+      </div>
+
+      <!-- Step 1 -->
+      <div id="step1">
+        <div class="step-lbl">Pasul 1 din 2 — Informații de contact</div>
+        <form id="contactForm" novalidate>
+          <div class="fg">
+            <label>Prenume</label>
+            <input type="text" id="firstName" placeholder="Ex: Andrei" required>
+            <div class="ferr" id="err-firstName">Introduceți prenumele.</div>
+          </div>
+          <div class="fg">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="email@exemplu.ro" required>
+            <div class="ferr" id="err-email">Email invalid.</div>
+          </div>
+          <div class="fg">
+            <label>WhatsApp</label>
+            <input type="tel" id="whatsapp" placeholder="+40712345678" required>
+            <div class="ferr" id="err-whatsapp">Număr invalid.</div>
+          </div>
+          <div class="price-row">
+            <span class="price-big">17$</span>
+            <span class="price-old">35$</span>
+            <span class="price-tag">⚡ 7 locuri rămase</span>
+          </div>
+          <button type="submit" class="btn-green">Continuă → Plată securizată</button>
+        </form>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="step2">
+        <div class="step-lbl">Pasul 2 din 2 — Plată</div>
+        <div class="order-box">
+          <div class="orow"><span>Workshop LIVE — Vineri 20:00</span><span></span></div>
+          <div class="orow"><span>✓ Demo sistem AI CRM</span><span></span></div>
+          <div class="orow"><span>✓ Template-uri WhatsApp + Email</span><span></span></div>
+          <div class="orow"><span>✓ Q&A LIVE cu Vali</span><span></span></div>
+          <div class="orow"><span>Total</span><span>$17.00</span></div>
+        </div>
+        <div class="sf">
+          <div class="sf-lbl">Număr card</div>
+          <div class="sf-mock">•••• •••• •••• ••••</div>
+        </div>
+        <div class="sf-row">
+          <div class="sf">
+            <div class="sf-lbl">Expiră</div>
+            <div class="sf-mock">MM / AA</div>
+          </div>
+          <div class="sf">
+            <div class="sf-lbl">CVC</div>
+            <div class="sf-mock">•••</div>
+          </div>
+        </div>
+        <button id="payBtn" class="btn-green" onclick="handlePayment()">REZERVĂ LOCUL — 17$ →</button>
+        <div class="card-trust">
+          <span>🔒 Stripe</span><span>· SSL 256-bit</span><span>· Garanție 100%</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /vsl-grid -->
+</section>
+
+<!-- ── CE ESTE INCLUS ── -->
+<section class="section">
+  <p class="s-label reveal">Ce primești vineri seară</p>
+  <h2 class="s-title reveal">Tot sistemul.<br>90 de minute. 17$.</h2>
+
+  <div class="inc-grid stagger">
+    <div class="inc-item reveal">
+      <span class="inc-icon">🎯</span>
+      <div>
+        <div class="inc-name">Demo LIVE — sistemul real, deschis complet</div>
+        <div class="inc-desc">Date reale, lead-uri reale, totul vizibil în timp real. Nu prezentare. Sistem activ.</div>
+      </div>
+    </div>
+    <div class="inc-item reveal">
+      <span class="inc-icon">💬</span>
+      <div>
+        <div class="inc-name">Template-uri WhatsApp + Email</div>
+        <div class="inc-desc">Secvența exactă ce pornește automat la 47 de secunde după ce un lead completează formularul.</div>
+      </div>
+    </div>
+    <div class="inc-item reveal">
+      <span class="inc-icon">🤖</span>
+      <div>
+        <div class="inc-name">Lead scoring AI — citești intenția</div>
+        <div class="inc-desc">Cine vrea să cumpere și cine nu — sistemul decide, tu nu mai ghicești.</div>
+      </div>
+    </div>
+    <div class="inc-item reveal">
+      <span class="inc-icon">📣</span>
+      <div>
+        <div class="inc-name">Campanie AI completă în 30 min</div>
+        <div class="inc-desc">Live, de la zero la campanie gata. AI face munca creativă, tu aprobi și lansezi.</div>
+      </div>
+    </div>
+    <div class="inc-item reveal">
+      <span class="inc-icon">🙋</span>
+      <div>
+        <div class="inc-name">Q&A LIVE — răspuns la situația ta</div>
+        <div class="inc-desc">Nu generic. Pui problema ta concretă, primești răspuns aplicabil chiar în seara aceea.</div>
+      </div>
+    </div>
+    <div class="inc-item bonus reveal">
+      <span class="inc-icon">🎁</span>
+      <div>
+        <div class="inc-name">BONUS — Înregistrarea completă</div>
+        <div class="inc-desc">Ajunge pe email a doua zi. Revezi oricând, fără presiunea notițelor live.</div>
+      </div>
     </div>
   </div>
 
-  <!-- Countdown timer -->
-  <div id="countdown-hero" style="display:flex;gap:16px;margin-bottom:32px;justify-content:center;flex-wrap:wrap;animation:fadeUp 1s 0.4s cubic-bezier(0.16,1,0.3,1) both">
-    <div style="text-align:center">
-      <div id="cd-h" style="font-size:42px;font-weight:800;letter-spacing:-0.04em;color:var(--white);line-height:1">00</div>
-      <div style="font-size:11px;color:var(--white-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">ore</div>
-    </div>
-    <div style="font-size:36px;font-weight:300;color:var(--white-tertiary);line-height:1.2">:</div>
-    <div style="text-align:center">
-      <div id="cd-m" style="font-size:42px;font-weight:800;letter-spacing:-0.04em;color:var(--white);line-height:1">00</div>
-      <div style="font-size:11px;color:var(--white-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">minute</div>
-    </div>
-    <div style="font-size:36px;font-weight:300;color:var(--white-tertiary);line-height:1.2">:</div>
-    <div style="text-align:center">
-      <div id="cd-s" style="font-size:42px;font-weight:800;letter-spacing:-0.04em;color:var(--green);line-height:1">00</div>
-      <div style="font-size:11px;color:var(--white-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">secunde</div>
-    </div>
-  </div>
-
-  <div class="hero-video-wrap">
-    <div class="video-frame">
-      <iframe
-        src="https://player.mediadelivery.net/embed/602296/2437d6fc-61b7-41e6-9127-025147463d7b?autoplay=true&loop=false&muted=false&preload=true&responsive=true"
-        loading="lazy"
-        allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
-        allowfullscreen="true">
-      </iframe>
-    </div>
-  </div>
-
-  <div class="hero-cta-group" style="margin-top:40px">
-    <a href="#checkout" class="cta-primary">
-      DA, VREAU SĂ VĂD LIVE SISTEMUL →
-    </a>
-    <div class="cta-secondary">
-      <span class="urgency-pill">⚡ <span class="spots-counter">7</span> locuri rămase · 17$ doar până vineri</span>
-    </div>
-  </div>
-
-  <div class="trust-strip">
-    <span>📅 Vineri, 20:00 RO</span>
-    <span>·</span>
-    <span>🔒 Plată securizată Stripe</span>
-    <span>·</span>
-    <span>✉️ Confirmare instant pe WhatsApp</span>
-    <span>·</span>
-    <span>↩️ Garanție 100% — banii înapoi fără întrebări</span>
+  <div class="price-cta-block reveal">
+    <div class="strike">Valoare totală: 635$</div>
+    <div class="p-big">17$</div>
+    <div class="p-note">Prețul crește la 35$ sâmbătă</div>
+    <div class="bar-wrap"><div class="bar-fill"></div></div>
+    <div class="bar-lbl">⚡ 7 locuri rămase din 50</div>
+    <a href="#checkout" class="btn-green" style="max-width:340px;margin:0 auto">DA, VREAU SĂ VĂD LIVE SISTEMUL →</a>
   </div>
 </section>
 
-<!-- ══════════════════════
-     MANIFESTO
-══════════════════════ -->
-<section class="manifesto-section">
-  <div class="manifesto-bg"></div>
-  <p class="manifesto-text reveal">
-    <strong>Nu e un CRM.</strong> Nu e un chatbot.<br>
-    Nu e o platformă de email marketing.<br><br>
-    E un <span class="highlight">sistem complet de vânzări</span>, construit cu AI,<br>
-    care transformă un vizitator necunoscut în client premium<br>
-    <strong>fără să miști un deget.</strong><br><br>
-    <span style="color:var(--white-tertiary);font-size:0.75em;font-weight:400">Și vineri seară — cu sistemul deschis, cu date reale, live — îl desfac bucată cu bucată. Tu decizi dacă vrei același lucru în afacerea ta.</span>
-  </p>
-</section>
-
-<!-- ══════════════════════
-     STATS
-══════════════════════ -->
-<section class="stats-section">
-  <p class="stats-label reveal">Nu e teorie. Sunt rezultate.</p>
-
-  <div class="stats-grid stagger">
+<!-- ── STATS ── -->
+<section class="section alt">
+  <div class="stats-grid">
     <div class="stat-cell reveal">
-      <div class="stat-num" style="color: var(--green);" data-target="600" data-suffix="+">0+</div>
-      <div class="stat-label">Antreprenori premium</div>
-      <div class="stat-sub">în comunitate, în România și diaspora</div>
+      <div class="stat-n" style="color:var(--green)" data-target="600" data-suffix="+">0+</div>
+      <div class="stat-k">Antreprenori premium</div>
+      <div class="stat-d">în comunitate, România + diaspora</div>
     </div>
     <div class="stat-cell reveal" style="transition-delay:80ms">
-      <div class="stat-num" style="color: var(--blue);" data-target="40" data-suffix="+">0+</div>
-      <div class="stat-label">Folosesc zilnic</div>
-      <div class="stat-sub">antreprenori activi în sistem în fiecare zi</div>
+      <div class="stat-n" style="color:var(--blue)" data-target="40" data-suffix="+">0+</div>
+      <div class="stat-k">Folosesc zilnic</div>
+      <div class="stat-d">sistemul activ în fiecare zi</div>
     </div>
     <div class="stat-cell reveal" style="transition-delay:160ms">
-      <div class="stat-num" style="color: var(--purple);" data-target="200" data-suffix="+">0+</div>
-      <div class="stat-label">Clubul Experților</div>
-      <div class="stat-sub">antreprenori & experți în marketing și vânzări</div>
-    </div>
-  </div>
-
-  <!-- StatsReveal video from Remotion — upload to /assets/stats-reveal.mp4 -->
-  <!-- <div class="stats-video-wrap reveal" style="margin-top:60px;">
-    <video autoplay loop muted playsinline>
-      <source src="/assets/stats-reveal.mp4" type="video/mp4">
-    </video>
-  </div> -->
-</section>
-
-<!-- ══════════════════════
-     QUALIFICATION GATE
-══════════════════════ -->
-<section class="gate-section">
-  <div class="reveal">
-    <p class="gate-label">Înainte să mergi mai departe</p>
-    <h2 class="gate-headline">17 dolari nu filtrează seriozitatea.<br>Dar asta o face.</h2>
-    <p class="gate-sub">Sistemul e construit pentru antreprenori care deja fac bani și vor să facă mai mulți — fără să lucreze mai mult.</p>
-  </div>
-
-  <div class="gate-grid reveal">
-    <div class="gate-yes">
-      <div class="gate-title">E pentru tine dacă</div>
-      <div class="gate-item">Faci deja 5.000€+/lună din coaching, cursuri sau servicii premium</div>
-      <div class="gate-item">Pierzi ore în fiecare săptămână cu leaduri reci care nu cumpără niciodată</div>
-      <div class="gate-item">Vrei mai mulți clienți fără să angajezi mai multă lume sau să lucrezi mai mult</div>
-      <div class="gate-item">Ești gata să implementezi — nu să mai adaugi un curs la colecție</div>
-      <div class="gate-item">Vrei demonstrație reală — sistem deschis, date reale, zero teorie</div>
-      <div class="gate-item">Iei decizii rapid când valoarea e clară</div>
-    </div>
-    <div class="gate-no">
-      <div class="gate-title">Nu e pentru tine dacă</div>
-      <div class="gate-item">Ești la început și nu ai venituri consistente încă</div>
-      <div class="gate-item">Crezi că AI-ul e un trend trecător</div>
-      <div class="gate-item">Cauți o soluție magică fără nicio implementare din partea ta</div>
-      <div class="gate-item">Preferi să "te mai gândești" la orice decizie, indiferent de valoare</div>
+      <div class="stat-n" style="color:var(--amber)" data-target="50" data-suffix="+">0+</div>
+      <div class="stat-k">Workshop-uri livrate</div>
+      <div class="stat-d">fiecare vineri la 20:00 RO</div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════
-     FEATURES
-══════════════════════ -->
-<section class="features-section">
-  <p class="section-eyebrow reveal">Ce desfac live vineri seara</p>
-  <h2 class="section-headline reveal">Sistemul real.<br>Fiecare piesă, explicată.</h2>
+<!-- ── TESTIMONIALE ── -->
+<section class="section">
+  <p class="s-label reveal">Nu mă asculta pe mine</p>
+  <h2 class="s-title reveal">Ascultă-i pe ei.</h2>
 
-  <!-- Feature 1: Lead Scoring -->
-  <div class="feature-row reveal">
-    <div class="feature-text">
-      <div class="feature-number">01</div>
-      <h3 class="feature-title">Știi exact cine vrea să cumpere.<br>Înainte să ridici telefonul.</h3>
-      <p class="feature-body">
-        Fiecare lead primește un scor calculat în timp real: cât din video a văzut, dacă a deschis emailul, dacă s-a întors pe pagina de vânzări. Sistemul citește intenția — tu acționezi cu precizie.
-      </p>
-      <div class="feature-detail">
-        Echipa ta vorbește doar cu oamenii care deja vor să cumpere. Nu mai pierzi ore cu leaduri reci.
-      </div>
-    </div>
-    <div class="feature-visual">
-      <div class="mini-ui">
-        <div class="mini-ui-header">
-          <div class="mini-dot" style="background:#EF4444"></div>
-          <div class="mini-dot" style="background:#F59E0B"></div>
-          <div class="mini-dot" style="background:#22C55E"></div>
-          <span style="font-size:10px;color:rgba(255,255,255,0.3);margin-left:8px">AI Lead Scoring</span>
-        </div>
-        <div class="mini-ui-body">
-          <div class="mini-row">
-            <span>Alexandru M.</span>
-            <span class="mini-badge badge-green">87 / HIGH</span>
-          </div>
-          <div style="padding:8px 10px">
-            <div class="score-bar-wrap">
-              <div class="score-bar-label"><span>Video văzut</span><span style="color:#22C55E">78%</span></div>
-              <div class="score-bar-track"><div class="score-bar-fill" style="width:78%;background:#22C55E"></div></div>
-            </div>
-            <div class="score-bar-wrap">
-              <div class="score-bar-label"><span>Pagina de vânzări</span><span style="color:#0EA5E9">91%</span></div>
-              <div class="score-bar-track"><div class="score-bar-fill" style="width:91%;background:#0EA5E9"></div></div>
-            </div>
-            <div class="score-bar-wrap">
-              <div class="score-bar-label"><span>Formular completat</span><span style="color:#A855F7">100%</span></div>
-              <div class="score-bar-track"><div class="score-bar-fill" style="width:100%;background:#A855F7"></div></div>
-            </div>
-          </div>
-          <div class="mini-row">
-            <span>Raluca D.</span>
-            <span class="mini-badge badge-amber">42 / MED</span>
-          </div>
-          <div class="mini-row">
-            <span>Mihai P.</span>
-            <span class="mini-badge badge-green">94 / HIGH</span>
-          </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="quote">"Am intrat sceptic. Am ieșit cu 3 idei implementate a doua zi. CRM-ul cu AI scoring a schimbat complet cum gestionăm leadurile — <strong>rata de conversie a crescut de la 18% la 34% în 3 săptămâni.</strong>"</p>
+      <div class="t-author">
+        <div class="t-avatar">A</div>
+        <div>
+          <div class="t-name">Andrei M.</div>
+          <div class="t-role">Business Coach · București</div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Feature 2: WhatsApp Auto -->
-  <div class="feature-row reverse reveal">
-    <div class="feature-text">
-      <div class="feature-number">02</div>
-      <h3 class="feature-title">WhatsApp + Email.<br>Instant. Automat. Non-stop.</h3>
-      <p class="feature-body">
-        În secunda în care un lead completează formularul, primește un mesaj personalizat pe WhatsApp și un email. Nu tu. Sistemul. Secvența continuă 7 zile — la momentul potrivit, cu mesajul potrivit.
-      </p>
-      <div class="feature-detail">
-        Template-urile exacte pe care le copiezi. Le lansezi marți dimineața — cu sau fără echipă.
-      </div>
-    </div>
-    <div class="feature-visual">
-      <div class="mini-ui">
-        <div class="mini-ui-header">
-          <div class="mini-dot" style="background:#EF4444"></div>
-          <div class="mini-dot" style="background:#F59E0B"></div>
-          <div class="mini-dot" style="background:#22C55E"></div>
-          <span style="font-size:10px;color:rgba(255,255,255,0.3);margin-left:8px">WhatsApp Automation</span>
-        </div>
-        <div class="mini-ui-body">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-            <div style="width:28px;height:28px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:14px">💬</div>
-            <span style="font-size:11px;color:rgba(255,255,255,0.4)">Trimis automat · Acum 2s</span>
-            <span class="mini-badge badge-green" style="margin-left:auto">✓ Livrat</span>
-          </div>
-          <div class="wa-bubble">
-            Bună Alexandru! 👋 Locul tău la workshop-ul de vineri e confirmat. Vineri la 20:00 îți arăt sistemul care a adus <strong style="color:#22C55E">600+ clienți premium</strong>. Te aștept! 🚀
-          </div>
-          <div style="font-size:10px;color:rgba(255,255,255,0.3);text-align:right">✓✓ Citit</div>
-          <div style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px">
-            <div class="score-bar-label" style="margin-bottom:6px"><span style="font-size:10px;color:rgba(255,255,255,0.4)">Secvență activă</span></div>
-            <div class="mini-row" style="font-size:10px;padding:5px 8px">Mesaj 1 — Instant <span class="mini-badge badge-green">✓</span></div>
-            <div class="mini-row" style="font-size:10px;padding:5px 8px">Mesaj 2 — Ziua 2 <span class="mini-badge badge-blue">Programat</span></div>
-            <div class="mini-row" style="font-size:10px;padding:5px 8px">Mesaj 3 — Ziua 5 <span class="mini-badge badge-amber">În așteptare</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Feature 3: Campaign AI -->
-  <div class="feature-row reveal">
-    <div class="feature-text">
-      <div class="feature-number">03</div>
-      <h3 class="feature-title">O campanie completă de vânzări.<br>Creată de AI în 30 de minute.</h3>
-      <p class="feature-body">
-        De la copy la structura de ad-uri — AI face toată munca creativă. Tu revezi, aprobi și lansezi. Fără agenție. Fără costuri de producție. Fără așteptări.
-      </p>
-      <div class="feature-detail">
-        Sistemul folosit pentru a atrage 600+ antreprenori premium. Îl dezasamblez complet vineri seara.
-      </div>
-    </div>
-    <div class="feature-visual">
-      <div class="mini-ui">
-        <div class="mini-ui-header">
-          <div class="mini-dot" style="background:#EF4444"></div>
-          <div class="mini-dot" style="background:#F59E0B"></div>
-          <div class="mini-dot" style="background:#22C55E"></div>
-          <span style="font-size:10px;color:rgba(255,255,255,0.3);margin-left:8px">AI Campaign Builder</span>
-        </div>
-        <div class="mini-ui-body">
-          <div class="ai-block">
-            <div style="color:rgba(255,255,255,0.3);margin-bottom:4px">🤖 Titlu Ad #1 — generat de AI</div>
-            <div style="color:rgba(255,255,255,0.65)">"Cum am atras 600+ antreprenori premium cu un singur sistem AI"</div>
-          </div>
-          <div class="ai-block">
-            <div style="color:rgba(255,255,255,0.3);margin-bottom:4px">🤖 Titlu Ad #2</div>
-            <div style="color:rgba(255,255,255,0.65)">"Vineri seara, îți arăt live sistemul care lucrează cât tu dormi"</div>
-          </div>
-          <div class="ai-block">
-            <div style="color:rgba(255,255,255,0.3);margin-bottom:4px">🤖 Primary Text</div>
-            <div style="color:rgba(255,255,255,0.65)">"Dacă faci 5000€+/lună și nu ai un sistem AI de vânzări..."</div>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:10px">
-            <div style="flex:1;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:7px;padding:7px;text-align:center;font-size:10px;color:#22C55E;font-weight:700">✓ Aprobă</div>
-            <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:7px;text-align:center;font-size:10px;color:rgba(255,255,255,0.4)">Regenerează</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Feature 4: CRM Pipeline -->
-  <div class="feature-row reverse reveal">
-    <div class="feature-text">
-      <div class="feature-number">04</div>
-      <h3 class="feature-title">Tot pipeline-ul.<br>Un singur loc. Zero haos.</h3>
-      <p class="feature-body">
-        Contactat, Neinteresat, Client — urmărești fiecare lead prin pipeline complet. Atribui la echipă, adaugi notițe din apeluri, programezi follow-up-uri. 10 oameni de vânzări, zero confuzie.
-      </p>
-      <div class="feature-detail">
-        Fiecare știe ce are de făcut și când. Raportul zilnic — generat automat.
-      </div>
-    </div>
-    <div class="feature-visual">
-      <div class="mini-ui">
-        <div class="mini-ui-header">
-          <div class="mini-dot" style="background:#EF4444"></div>
-          <div class="mini-dot" style="background:#F59E0B"></div>
-          <div class="mini-dot" style="background:#22C55E"></div>
-          <span style="font-size:10px;color:rgba(255,255,255,0.3);margin-left:8px">CRM Pipeline</span>
-        </div>
-        <div class="mini-ui-body">
-          <div class="mini-row">
-            <span>Alexandru M.</span>
-            <span class="mini-badge badge-amber">Contactat</span>
-          </div>
-          <div class="mini-row">
-            <span>Raluca D.</span>
-            <span class="mini-badge badge-green">Client ✓</span>
-          </div>
-          <div class="mini-row">
-            <span>Mihai P.</span>
-            <span class="mini-badge badge-blue">Nou 🔥</span>
-          </div>
-          <div class="mini-row">
-            <span>Elena T.</span>
-            <span class="mini-badge badge-green">Client ✓</span>
-          </div>
-          <div class="mini-row">
-            <span>Bogdan C.</span>
-            <span class="mini-badge badge-purple">Propunere</span>
-          </div>
-          <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05)">
-            <div class="score-bar-wrap">
-              <div class="score-bar-label"><span>Rată conversie</span><span style="color:#22C55E">34%</span></div>
-              <div class="score-bar-track"><div class="score-bar-fill" style="width:34%;background:#22C55E"></div></div>
-            </div>
-          </div>
+    <div class="testi-card reveal" style="transition-delay:80ms">
+      <div class="stars">★★★★★</div>
+      <p class="quote">"Vali nu te vinde cu promisiuni. Deschide sistemul real și-ți arată tot. <strong>Secvența de WhatsApp a adus 2 clienți noi în prima săptămână.</strong> Cel mai valoros 17$ pe care i-am dat vreodată."</p>
+      <div class="t-author">
+        <div class="t-avatar">R</div>
+        <div>
+          <div class="t-name">Raluca D.</div>
+          <div class="t-role">Antreprenor · Cursuri online</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════
-     SYSTEM FLOW VIDEO
-══════════════════════ -->
-<section class="flow-section">
-  <div class="flow-inner">
-    <!-- System flow video — upload to /assets/system-flow.mp4 -->
-    <!-- <div class="reveal-scale">
-      <div class="flow-video-wrap">
-        <video autoplay loop muted playsinline>
-          <source src="/assets/system-flow.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div> -->
-
-    <div class="flow-steps">
-      <div class="reveal" style="margin-bottom:40px">
-        <p class="section-eyebrow" style="text-align:left">Cum funcționează</p>
-        <h2 class="section-headline" style="text-align:left;margin-bottom:0;font-size:clamp(28px,4vw,42px)">Un click pe reclamă.<br>Un client înregistrat.</h2>
-      </div>
-
-      <div class="flow-step reveal">
-        <div class="flow-step-num">1</div>
-        <div class="flow-step-text">
-          <h4>Lead detectat instantaneu</h4>
-          <p>Formularul se completează → sistemul înregistrează lead-ul cu sursa, UTM-ul și timestamp-ul exact.</p>
-        </div>
-      </div>
-
-      <div class="flow-step reveal" style="transition-delay:80ms">
-        <div class="flow-step-num">2</div>
-        <div class="flow-step-text">
-          <h4>AI citește intenția</h4>
-          <p>Scor calculat în timp real: cât video a văzut, ce pagini a vizitat, cum s-a comportat.</p>
-        </div>
-      </div>
-
-      <div class="flow-step reveal" style="transition-delay:160ms">
-        <div class="flow-step-num">3</div>
-        <div class="flow-step-text">
-          <h4>WhatsApp + Email trimise automat</h4>
-          <p>Mesaj personalizat în secunde. Secvența de 7 zile pornește imediat — fără să miști un deget.</p>
-        </div>
-      </div>
-
-      <div class="flow-step reveal" style="transition-delay:240ms">
-        <div class="flow-step-num">4</div>
-        <div class="flow-step-text">
-          <h4>Echipa preia leadurile fierbinți</h4>
-          <p>Notificare instant la agentul potrivit cu toate informațiile — scor, istoric, recomandare de abordare.</p>
-        </div>
-      </div>
-
-      <div class="flow-step reveal" style="transition-delay:320ms">
-        <div class="flow-step-num">5</div>
-        <div class="flow-step-text">
-          <h4>Status → CLIENT</h4>
-          <p>Pipeline actualizat. Comision calculat automat. Raport zilnic generat fără intervenție.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════
-     TESTIMONIALS
-══════════════════════ -->
-<section class="testi-section">
-  <div style="max-width:1100px;margin:0 auto">
-    <p class="section-eyebrow reveal">Oameni reali. Rezultate reale.</p>
-    <h2 class="section-headline reveal">Ascultă-i pe ei,<br>nu pe mine.</h2>
-
-    <div class="testi-scroll stagger">
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Am intrat sceptic. Am ieșit cu 3 idei implementate a doua zi. CRM-ul cu AI scoring a schimbat complet cum gestionăm leadurile — <strong style="color:var(--white)">rata de conversie a crescut de la 18% la 34% în 3 săptămâni.</strong>"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">A</div>
-          <div>
-            <div class="testi-name">Andrei M.</div>
-            <div class="testi-role">Business Coach · București</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Vali nu te vinde cu promisiuni. Deschide sistemul real și-ți arată tot. Cel mai valoros 90 de minute raportat la preț pe care l-am trăit. <strong style="color:var(--white)">Secvența de WhatsApp a adus 2 clienți noi în prima săptămână.</strong>"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">R</div>
-          <div>
-            <div class="testi-name">Raluca D.</div>
-            <div class="testi-role">Antreprenor · Cursuri online</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"<strong style="color:var(--white)">Sistemul AI de campanii mi-a economisit 40 de ore pe lună.</strong> Nu mai plătesc agenție. Nu mai aștept brief-uri. În 30 de minute am campanie gata de lansare — și performează mai bine decât înainte."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">M</div>
-          <div>
-            <div class="testi-name">Mihai P.</div>
-            <div class="testi-role">Consultant financiar · Cluj</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════
-     HOST
-══════════════════════ -->
-<section class="host-section">
+<!-- ── HOST ── -->
+<section class="section alt">
   <div class="host-inner reveal">
-    <div class="host-avatar">👨‍💼</div>
-    <div class="host-name">Vali</div>
-    <div class="host-title">Fondator · Clubul Experților</div>
+    <div class="host-av">👨‍💼</div>
+    <div class="host-n">Vali</div>
+    <div class="host-r">Fondator · Clubul Experților</div>
     <p class="host-bio">
-      Nu sunt un consultant care a citit despre AI. Sunt antreprenorul care l-a construit, l-a testat cu banii lui și trăiește din el.<br><br>
-      <strong style="color:var(--white)">14 luni de optimizări. 50+ workshop-uri LIVE livrate. 600+ antreprenori premium</strong> în comunitate. 40+ care deschid sistemul în fiecare zi.<br><br>
-      La workshop nu primești un PowerPoint. Deschid sistemul în timp real — cum intră leadurile, cum sunt scorrate de AI, cum sunt contactate automat în 47 de secunde, cum se închid singure. Date reale. Clienți reali. Fără teorie.<br><br>
-      <span style="color:var(--white-tertiary)">Tu decizi vineri seară dacă vrei același lucru în afacerea ta.</span>
+      Nu sunt un consultant care a citit despre AI. Sunt antreprenorul care l-a construit, l-a testat și trăiește din el.<br><br>
+      <strong>14 luni de optimizări. 50+ workshop-uri LIVE. 600+ antreprenori premium</strong> în comunitate — 40+ care deschid sistemul în fiecare zi.<br><br>
+      Vineri seară deschid totul live. Date reale. Clienți reali. Zero teorie.<br>Tu decizi dacă vrei același lucru în afacerea ta.
     </p>
   </div>
 </section>
 
-<!-- ══════════════════════
-     3 SECRETS
-══════════════════════ -->
-<section class="secrets-section">
-  <p class="section-eyebrow reveal">Ce vei vedea vineri seară</p>
-  <h2 class="section-headline reveal">3 lucruri pe care<br>nu ți le-a arătat nimeni live.</h2>
-
-  <div class="secrets-grid">
-    <div class="secret-card reveal">
-      <div class="secret-num">Secretul #1</div>
-      <h3 class="secret-title">De ce antreprenorii care fac 5.000€/lună pierd clienți premium în fiecare zi</h3>
-      <p class="secret-body">Și cum un sistem cu AI oprește asta automat — fără să angajezi mai multă lume sau să lucrezi mai mult.</p>
-    </div>
-    <div class="secret-card reveal" style="transition-delay:80ms">
-      <div class="secret-num">Secretul #2</div>
-      <h3 class="secret-title">Cum poți avea o echipă de vânzări care lucrează 24/7 — chiar dacă ești singur</h3>
-      <p class="secret-body">Sistemul care contactează, califică și urmărește leadurile automat. Tu supervizezi. AI execută.</p>
-    </div>
-    <div class="secret-card reveal" style="transition-delay:160ms">
-      <div class="secret-num">Secretul #3</div>
-      <h3 class="secret-title">De ce nu ai nevoie de experiență tehnică sau bugete mari ca să implementezi exact asta</h3>
-      <p class="secret-body">Dacă poți folosi WhatsApp și un laptop, poți lansa primul tău sistem AI de vânzări în 48 de ore de la workshop.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════
-     OFFER + CHECKOUT
-══════════════════════ -->
-<section class="offer-section" id="checkout">
-  <div class="reveal" style="text-align:center;margin-bottom:64px">
-    <p class="section-eyebrow">Oferta de vineri seară</p>
-    <h2 class="section-headline" style="margin-bottom:12px">Tot sistemul. Live. 90 de minute.<br><span style="color:var(--green)">17 dolari.</span></h2>
-    <p style="font-size:17px;color:var(--white-secondary);max-width:520px;margin:0 auto">
-      O singură seară. Sistemul complet deschis. Pleci cu claritate totală și cu tot ce ai nevoie să implementezi luni dimineață.
-    </p>
-  </div>
-
-  <div class="offer-layout">
-    <!-- Left: Value -->
-    <div class="reveal-left">
-      <div class="value-item">
-        <span class="value-icon">✦</span>
-        <div>
-          <div class="value-title">Demo LIVE — sistemul real, deschis complet</div>
-          <div class="value-desc">Nu o prezentare. Sistemul live, cu date reale, pas cu pas. Exact cum funcționează în afacerea mea zi de zi.</div>
-        </div>
-      </div>
-      <div class="value-item">
-        <span class="value-icon">✦</span>
-        <div>
-          <div class="value-title">Secvența WhatsApp + Email — gata de copiat</div>
-          <div class="value-desc">Template-urile exacte care funcționează. Le copiezi și le lansezi a doua zi dimineață.</div>
-        </div>
-      </div>
-      <div class="value-item">
-        <span class="value-icon">✦</span>
-        <div>
-          <div class="value-title">Sistemul de lead scoring care citește intenția</div>
-          <div class="value-desc">Cum scorezi un lead în timp real. Cine e fierbinte, cine e rece — sistemul decide, nu tu ghicești.</div>
-        </div>
-      </div>
-      <div class="value-item">
-        <span class="value-icon">✦</span>
-        <div>
-          <div class="value-title">Campanie AI completă în 30 de minute</div>
-          <div class="value-desc">Live. De la zero la campanie gata de lansare. AI face toată munca creativă.</div>
-        </div>
-      </div>
-      <div class="value-item">
-        <span class="value-icon">✦</span>
-        <div>
-          <div class="value-title">Q&A LIVE — întrebarea ta, răspuns specific</div>
-          <div class="value-desc">Nu răspunsuri generice. Pui situația ta concretă și primești răspuns aplicabil în seara aceea.</div>
-        </div>
-      </div>
-      <div class="value-item">
-        <span class="value-icon">✦</span>
-        <div>
-          <div class="value-title">Acces comunitate — 600+ antreprenori premium</div>
-          <div class="value-desc">Intri direct într-o rețea de oameni care fac 5.000€+/lună și implementează același sistem.</div>
-        </div>
-      </div>
-      <div class="value-item" style="background:rgba(34,197,94,0.04);border-left:2px solid var(--green);padding-left:16px;border-radius:0 8px 8px 0">
-        <span class="value-icon">🎁</span>
-        <div>
-          <div class="value-title" style="color:var(--green)">BONUS — Înregistrarea completă, trimisă pe email</div>
-          <div class="value-desc">Dacă ratezi ceva sau vrei să revezi o secțiune, înregistrarea ajunge la tine a doua zi. Zero presiune să notezi tot live.</div>
-        </div>
-      </div>
-
-      <div class="price-block">
-        <div class="price-old">Valoare totală: 635$ — tu plătești</div>
-        <div class="price-new">17$</div>
-        <div class="progress-wrap">
-          <div class="progress-fill"></div>
-        </div>
-        <div class="progress-label">⚡ <span class="spots-counter">7</span> locuri rămase din 50 — prețul crește sâmbătă la 35$</div>
-      </div>
-    </div>
-
-    <!-- Right: Checkout -->
-    <div class="reveal-right">
-      <div class="checkout-card">
-        <div class="checkout-card-title">Rezervă-ți locul</div>
-        <div class="checkout-card-sub">Workshop LIVE · Vineri 20:00 · 17$</div>
-
-        <div class="step-indicator">
-          <div class="step-dot active" id="dot1">1</div>
-          <div class="step-connector" id="conn1"></div>
-          <div class="step-dot" id="dot2">2</div>
-        </div>
-
-        <!-- Step 1 -->
-        <div id="step1">
-          <div class="step-label-text">Pasul 1 din 2 — Informații</div>
-          <form id="contactForm" novalidate>
-            <div class="form-group">
-              <label>Prenume</label>
-              <input type="text" id="firstName" placeholder="Ex: Andrei" required>
-              <div class="field-error" id="err-firstName">Introduceți prenumele.</div>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" id="email" placeholder="email@exemplu.ro" required>
-              <div class="field-error" id="err-email">Introduceți un email valid.</div>
-            </div>
-            <div class="form-group">
-              <label>WhatsApp</label>
-              <input type="tel" id="whatsapp" placeholder="+40712345678" required>
-              <div class="field-error" id="err-whatsapp">Introduceți numărul de WhatsApp.</div>
-            </div>
-            <button type="submit" class="cta-primary" style="margin-top:12px;width:100%">
-              Continuă →
-            </button>
-          </form>
-        </div>
-
-        <!-- Step 2 -->
-        <div id="step2">
-          <div class="step-label-text">Pasul 2 din 2 — Plată</div>
-          <div class="order-summary">
-            <div class="order-title">Workshop LIVE — Vineri 20:00 RO</div>
-            <div class="order-check">✓ Demo live sistem AI CRM</div>
-            <div class="order-check">✓ Template-uri WhatsApp + Email</div>
-            <div class="order-check">✓ Q&A LIVE cu Vali</div>
-            <div class="order-total">
-              <span>Total</span>
-              <span style="color:var(--green)">$17.00</span>
-            </div>
-          </div>
-
-          <!-- Stripe mount point -->
-          <div id="stripe-card-element">
-            <div class="stripe-field-group">
-              <div class="stripe-lbl">Număr card</div>
-              <div class="stripe-mock">•••• •••• •••• ••••</div>
-            </div>
-            <div class="stripe-row">
-              <div class="stripe-field-group">
-                <div class="stripe-lbl">Expiră</div>
-                <div class="stripe-mock">MM / AA</div>
-              </div>
-              <div class="stripe-field-group">
-                <div class="stripe-lbl">CVC</div>
-                <div class="stripe-mock">•••</div>
-              </div>
-            </div>
-          </div>
-
-          <button id="payBtn" class="cta-primary" style="width:100%;margin-top:4px" onclick="handlePayment()">
-            REZERVĂ LOCUL — 17$ →
-          </button>
-          <div class="trust-badges">
-            <span>🔒 Stripe</span>
-            <span>· SSL</span>
-            <span>· Garanție 100%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════
-     FAQ
-══════════════════════ -->
-<section class="faq-section">
-  <p class="section-eyebrow reveal">Ai întrebări?</p>
-  <h2 class="section-headline reveal">Răspunsuri directe.</h2>
+<!-- ── FAQ ── -->
+<section class="section">
+  <p class="s-label reveal">Ai întrebări?</p>
+  <h2 class="s-title reveal">Răspunsuri directe.</h2>
 
   <div class="faq-list">
     <div class="faq-item reveal">
       <button class="faq-q" onclick="toggleFaq(this)">
         Workshop-ul e înregistrat sau trebuie să fiu LIVE?
-        <span class="faq-arrow">+</span>
+        <span class="faq-arr">+</span>
       </button>
-      <div class="faq-a">LIVE, în timp real, vineri la 20:00 RO. Poți pune întrebări, interacționa direct cu Vali și primi răspunsuri specifice situației tale. Nu e un video pre-înregistrat.</div>
+      <div class="faq-a">LIVE, vineri la 20:00 RO. Poți pune întrebări și primi răspunsuri specifice situației tale. Nu e pre-înregistrat.</div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-q" onclick="toggleFaq(this)">
         Ce se întâmplă dacă ratez vinerea aceasta?
-        <span class="faq-arrow">+</span>
+        <span class="faq-arr">+</span>
       </button>
-      <div class="faq-a">Workshop-ul se ține în fiecare vineri la 20:00. Dacă ratezi o ediție, participi la următoarea cu același acces. Vei primi toate detaliile pe WhatsApp cu 2 ore înainte.</div>
+      <div class="faq-a">Workshop-ul se ține în fiecare vineri la 20:00. Dacă ratezi o ediție, participi la următoarea. Primești detaliile pe WhatsApp cu 2 ore înainte.</div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-q" onclick="toggleFaq(this)">
         Trebuie să am cunoștințe tehnice?
-        <span class="faq-arrow">+</span>
+        <span class="faq-arr">+</span>
       </button>
-      <div class="faq-a">Zero. Workshop-ul e pentru antreprenori, nu pentru tehnicieni. Dacă poți folosi WhatsApp, poți înțelege și implementa sistemul. Vali explică totul în limbaj simplu, pas cu pas.</div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        De ce costă doar 17$?
-        <span class="faq-arrow">+</span>
-      </button>
-      <div class="faq-a">Prețul mic elimină bariera de intrare. Vrem să-ți permitem să testezi valoarea înainte de orice decizie majoră. Vineri seara îți arătăm tot sistemul. Tu decizi dacă vrei să-l implementezi.</div>
+      <div class="faq-a">Zero. Dacă poți folosi WhatsApp, poți implementa. Vali explică totul pas cu pas, în limbaj simplu.</div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-q" onclick="toggleFaq(this)">
         Există garanție?
-        <span class="faq-arrow">+</span>
+        <span class="faq-arr">+</span>
       </button>
-      <div class="faq-a">Da. Garanție completă 100%. Dacă participi activ și consideri că nu ai primit valoare, returnăm cei 17$ pe loc, fără întrebări și fără proceduri. Trimite un mesaj pe WhatsApp și banii sunt înapoi în 24 de ore. Până acum, nimeni nu a cerut.</div>
+      <div class="faq-a">Da. 100% — banii înapoi fără întrebări. Trimite un mesaj pe WhatsApp și sunt returnați în 24h. Până acum, nimeni nu a cerut.</div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-q" onclick="toggleFaq(this)">
-        Pot implementa sistemul singur sau am nevoie de echipă?
-        <span class="faq-arrow">+</span>
+        De ce costă doar 17$?
+        <span class="faq-arr">+</span>
       </button>
-      <div class="faq-a">Singur. Sistemul e gândit pentru antreprenori, nu pentru echipe tehnice. Dacă poți folosi WhatsApp și un laptop, poți implementa în 48 de ore de la workshop. Vali explică pas cu pas, inclusiv ce unelte folosești și cât costă fiecare.</div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Ce platforme și unelte sunt folosite în sistem?
-        <span class="faq-arrow">+</span>
-      </button>
-      <div class="faq-a">O combinație de unelte care lucrează împreună — CRM cu AI scoring, WhatsApp Business API și automatizări de email. Vineri seară le desfac pe toate: ce face fiecare, cum se conectează și costurile reale. Fără surprize ascunse.</div>
+      <div class="faq-a">Prețul mic elimină bariera de intrare. Vrei să testezi valoarea înainte de orice decizie majoră. Vineri seara îți arătăm tot. Tu decizi după.</div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════
-     BOTTOM CTA
-══════════════════════ -->
-<section class="bottom-cta">
-  <p class="section-eyebrow reveal">Decizia e simplă</p>
-  <h2 class="bottom-headline reveal">O singură vineri seară.<br>Tot sistemul deschis.<br><span style="color:var(--green)">17$.</span></h2>
-  <p class="hero-sub reveal" style="margin: 0 auto 16px; display:block">
-    Luni dimineață, poți porni prima ta automatizare. Sau continui cum ai făcut până acum.
-  </p>
-  <p class="reveal" style="font-size:15px;color:var(--white-tertiary);margin-bottom:40px;display:block">
-    Prețul de 17$ expiră sâmbătă — după aceea e 35$.
-  </p>
+<!-- ── BOTTOM CTA ── -->
+<section class="btm-cta">
+  <p class="s-label reveal">O singură decizie</p>
+  <h2 class="btm-headline reveal">Vineri seară.<br>Tot sistemul deschis.<br><span>17$.</span></h2>
+  <p class="btm-sub reveal">Luni dimineață pornești prima ta automatizare. Sau continui cum ai făcut până acum.</p>
   <div class="reveal">
-    <!-- Countdown inline near bottom CTA -->
-    <div style="display:flex;gap:12px;justify-content:center;margin-bottom:28px;flex-wrap:wrap">
-      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 20px;text-align:center;min-width:70px">
-        <div id="cd2-h" style="font-size:28px;font-weight:800;letter-spacing:-0.03em;color:var(--white);line-height:1">--</div>
-        <div style="font-size:10px;color:var(--white-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-top:3px">ore</div>
-      </div>
-      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 20px;text-align:center;min-width:70px">
-        <div id="cd2-m" style="font-size:28px;font-weight:800;letter-spacing:-0.03em;color:var(--white);line-height:1">--</div>
-        <div style="font-size:10px;color:var(--white-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-top:3px">minute</div>
-      </div>
-      <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:12px 20px;text-align:center;min-width:70px">
-        <div id="cd2-s" style="font-size:28px;font-weight:800;letter-spacing:-0.03em;color:var(--green);line-height:1">--</div>
-        <div style="font-size:10px;color:var(--white-tertiary);text-transform:uppercase;letter-spacing:0.06em;margin-top:3px">secunde</div>
-      </div>
-    </div>
-    <a href="#checkout" class="cta-primary" style="margin:0 auto;display:inline-flex;max-width:360px">
-      DA, VREAU SĂ VĂD LIVE SISTEMUL →
-    </a>
-    <div class="trust-strip" style="margin-top:20px">
+    <a href="#checkout" class="btn-green" style="max-width:360px;margin:0 auto">DA, VREAU SĂ VĂD LIVE SISTEMUL →</a>
+    <div class="trust-row">
       <span>🔒 Stripe · SSL</span>
-      <span>·</span>
-      <span>✉️ Confirmare pe WhatsApp în 2 minute</span>
       <span>·</span>
       <span>↩️ Garanție 100% — banii înapoi fără întrebări</span>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════
-     FOOTER
-══════════════════════ -->
+<!-- ── FOOTER ── -->
 <footer>
   © 2026 Clubul Experților · Toate drepturile rezervate<br>
-  <a href="#">Politica de confidențialitate</a> · <a href="#">Termeni și condiții</a> · clubulexpertilor.com
+  <a href="#">Politică de confidențialitate</a> · <a href="#">Termeni și condiții</a> · clubulexpertilor.com
 </footer>
 
-<!-- ══════════════════════
-     STICKY MOBILE CTA
-══════════════════════ -->
-<div class="sticky-mobile-cta" id="stickyCta">
+<!-- ── STICKY MOBILE BAR ── -->
+<div class="sticky-bar" id="stickyBar">
   <a href="#checkout">
-    DA, VREAU SĂ VĂD LIVE → <span class="sticky-price">17$</span>
+    DA, VREAU SĂ VĂD LIVE → <span class="s-tag">17$</span>
   </a>
 </div>
 
-<!-- ══════════════════════
-     SCRIPTS
-══════════════════════ -->
 <script>
-// ── NAV scroll effect ──
+// ── Nav scroll ──
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
 
-// ── Scroll reveal (IntersectionObserver) ──
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
+// ── Scroll reveal ──
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
 }, { threshold: 0.12 });
-
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
-  observer.observe(el);
-});
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 // ── Animated counters ──
 function animateCounter(el) {
   const target = parseInt(el.dataset.target);
   const suffix = el.dataset.suffix || '';
-  const duration = 2000;
   const start = performance.now();
-
-  function update(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(eased * target) + suffix;
-    if (progress < 1) requestAnimationFrame(update);
-  }
-  requestAnimationFrame(update);
+  const duration = 2000;
+  (function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  })(performance.now());
 }
-
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      animateCounter(e.target);
-      counterObserver.unobserve(e.target);
-    }
-  });
+const cntObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); cntObs.unobserve(e.target); } });
 }, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => cntObs.observe(el));
 
-document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+// ── Smooth scroll → #checkout ──
+document.querySelectorAll('a[href="#checkout"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+  });
+});
 
-// ── FAQ toggle ──
-function toggleFaq(btn) {
-  btn.closest('.faq-item').classList.toggle('open');
-}
-
-// ── UTM capture ──
-function getUTMs() {
-  const p = new URLSearchParams(window.location.search);
-  return {
-    utm_source: p.get('utm_source') || '',
-    utm_medium: p.get('utm_medium') || '',
-    utm_campaign: p.get('utm_campaign') || ''
-  };
-}
+// ── Sticky bar: hide when checkout visible ──
+const stickyBar = document.getElementById('stickyBar');
+const checkoutEl = document.getElementById('checkout');
+new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    stickyBar.style.opacity = e.isIntersecting ? '0' : '1';
+    stickyBar.style.pointerEvents = e.isIntersecting ? 'none' : 'auto';
+  });
+}, { threshold: 0.05 }).observe(checkoutEl);
 
 // ── Form validation ──
 function validateStep1() {
   let valid = true;
-  const checks = [
+  [
     { id: 'firstName', errId: 'err-firstName', fn: v => v.trim().length > 1 },
-    { id: 'email', errId: 'err-email', fn: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-    { id: 'whatsapp', errId: 'err-whatsapp', fn: v => v.trim().length >= 8 }
-  ];
-  checks.forEach(({ id, errId, fn }) => {
+    { id: 'email',     errId: 'err-email',     fn: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'whatsapp',  errId: 'err-whatsapp',  fn: v => v.trim().length >= 8 }
+  ].forEach(({ id, errId, fn }) => {
     const inp = document.getElementById(id);
     const err = document.getElementById(errId);
-    if (!fn(inp.value)) {
-      inp.classList.add('error');
-      err.style.display = 'block';
-      valid = false;
-    } else {
-      inp.classList.remove('error');
-      err.style.display = 'none';
-    }
+    if (!fn(inp.value)) { inp.classList.add('error'); err.style.display = 'block'; valid = false; }
+    else { inp.classList.remove('error'); err.style.display = 'none'; }
   });
   return valid;
 }
@@ -2414,22 +865,19 @@ function validateStep1() {
 document.getElementById('contactForm').addEventListener('submit', e => {
   e.preventDefault();
   if (!validateStep1()) return;
-
+  const params = new URLSearchParams(location.search);
   const lead = {
     firstName: document.getElementById('firstName').value.trim(),
-    email: document.getElementById('email').value.trim(),
-    whatsapp: document.getElementById('whatsapp').value.trim(),
+    email:     document.getElementById('email').value.trim(),
+    whatsapp:  document.getElementById('whatsapp').value.trim(),
     timestamp: new Date().toISOString(),
-    ...getUTMs()
+    utm_source:   params.get('utm_source')   || '',
+    utm_medium:   params.get('utm_medium')   || '',
+    utm_campaign: params.get('utm_campaign') || ''
   };
-
-  // INTEGRATION: POST to your backend/CRM
   console.log('Lead:', lead);
-
-  // Fire Meta CAPI Lead event
+  // INTEGRATION: POST lead to your CRM/backend here
   if (typeof fbq !== 'undefined') fbq('track', 'Lead', { value: 17, currency: 'USD', content_name: 'Workshop 17$' });
-
-  // Transition to step 2
   document.getElementById('step1').style.display = 'none';
   document.getElementById('step2').style.display = 'block';
   document.getElementById('dot1').classList.replace('active', 'done');
@@ -2443,11 +891,7 @@ function handlePayment() {
   const btn = document.getElementById('payBtn');
   btn.textContent = 'Se procesează...';
   btn.disabled = true;
-
-  // INTEGRATION: Stripe PaymentIntent
-  // const stripe = Stripe('pk_live_...');
-  // stripe.confirmCardPayment(clientSecret, { payment_method: { card: cardElement }})
-
+  // INTEGRATION: Stripe PaymentIntent here
   setTimeout(() => {
     if (typeof fbq !== 'undefined') fbq('track', 'Purchase', { value: 17, currency: 'USD' });
     sessionStorage.setItem('workshopPaid', 'true');
@@ -2455,109 +899,41 @@ function handlePayment() {
   }, 1800);
 }
 
-// ── Smooth scroll for all href="#checkout" ──
-document.querySelectorAll('a[href="#checkout"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
-  });
-});
+// ── FAQ ──
+function toggleFaq(btn) { btn.closest('.faq-item').classList.toggle('open'); }
 
-// ── Countdown timer — next Friday 20:00 Romania (UTC+2 winter / UTC+3 summer) ──
+// ── Countdown — next Friday 20:00 Romania time ──
+function getRomaniaOffset(date) {
+  const y = date.getUTCFullYear();
+  function lastSunday(month, hour) {
+    const d = new Date(Date.UTC(y, month + 1, 0));
+    d.setUTCDate(d.getUTCDate() - d.getUTCDay());
+    d.setUTCHours(hour, 0, 0, 0);
+    return d.getTime();
+  }
+  return (date.getTime() >= lastSunday(2, 1) && date.getTime() < lastSunday(9, 1)) ? 3 : 2;
+}
 function getNextFridayRO() {
   const now = new Date();
-  // Romania winter = UTC+2, summer = UTC+3
-  // DST changes last Sunday of March/October
-  // March 5, 2026 = still winter, UTC+2
-  const roOffset = getRomaniaOffset(now);
-  const nowUTC = now.getTime() + now.getTimezoneOffset() * 60000;
-  const nowRO = new Date(nowUTC + roOffset * 3600000);
-
-  const day = nowRO.getDay(); // 0=Sun, 5=Fri
-  let daysUntilFriday = (5 - day + 7) % 7;
-
-  if (daysUntilFriday === 0) {
-    // Today is Friday — check if 20:00 has passed in RO time
-    if (nowRO.getHours() >= 20) daysUntilFriday = 7;
-  }
-
-  const targetRO = new Date(nowRO);
-  targetRO.setDate(nowRO.getDate() + daysUntilFriday);
-  targetRO.setHours(20, 0, 0, 0);
-
-  // Convert target back to UTC
-  const targetUTC = new Date(targetRO.getTime() - roOffset * 3600000);
-  return targetUTC;
+  const off = getRomaniaOffset(now);
+  const roNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + off * 3600000);
+  let days = (5 - roNow.getDay() + 7) % 7;
+  if (days === 0 && roNow.getHours() >= 20) days = 7;
+  const target = new Date(roNow);
+  target.setDate(roNow.getDate() + days);
+  target.setHours(20, 0, 0, 0);
+  return new Date(target.getTime() - off * 3600000);
 }
-
-function getRomaniaOffset(date) {
-  // Romania: UTC+2 in winter, UTC+3 in summer (EEST)
-  // Summer time: last Sunday of March to last Sunday of October
-  const year = date.getUTCFullYear();
-  const dstStart = lastSundayOf(year, 2, 1); // March, 01:00 UTC
-  const dstEnd = lastSundayOf(year, 9, 1);   // October, 01:00 UTC
-  const t = date.getTime();
-  return (t >= dstStart && t < dstEnd) ? 3 : 2;
-}
-
-function lastSundayOf(year, month, hour) {
-  // Last Sunday of given month (0-indexed), at given UTC hour
-  const d = new Date(Date.UTC(year, month + 1, 0)); // last day of month
-  d.setUTCDate(d.getUTCDate() - d.getUTCDay()); // go back to Sunday
-  d.setUTCHours(hour, 0, 0, 0);
-  return d.getTime();
-}
-
 function updateCountdown() {
-  const target = getNextFridayRO();
-  const now = new Date();
-  const diff = target - now;
-
-  if (diff <= 0) {
-    ['cd-h','cd-m','cd-s','cd2-h','cd2-m','cd2-s'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = '00';
-    });
-    return;
-  }
-
-  const h = Math.floor(diff / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-
-  const pad = n => String(n).padStart(2, '0');
-
-  [['cd-h','cd2-h'], ['cd-m','cd2-m'], ['cd-s','cd2-s']].forEach(([id1, id2], i) => {
-    const val = pad([h, m, s][i]);
-    const el1 = document.getElementById(id1);
-    const el2 = document.getElementById(id2);
-    if (el1) el1.textContent = val;
-    if (el2) el2.textContent = val;
-  });
-
-  // Update badge date
-  const badge = document.getElementById('badge-date');
-  if (badge) {
-    const daysLeft = Math.floor(diff / 86400000);
-    badge.textContent = daysLeft <= 1 ? 'mâine seară' : `în ${daysLeft} zile`;
-  }
+  const diff = getNextFridayRO() - new Date();
+  if (diff <= 0) return;
+  const pad = n => String(Math.floor(n)).padStart(2, '0');
+  document.getElementById('cd-h').textContent = pad(diff / 3600000);
+  document.getElementById('cd-m').textContent = pad((diff % 3600000) / 60000);
+  document.getElementById('cd-s').textContent = pad((diff % 60000) / 1000);
 }
-
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// ── Hide sticky CTA when checkout is visible ──
-const checkoutEl = document.getElementById('checkout');
-const stickyCta = document.getElementById('stickyCta');
-if (checkoutEl && stickyCta) {
-  const stickyObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      stickyCta.style.opacity = e.isIntersecting ? '0' : '1';
-      stickyCta.style.pointerEvents = e.isIntersecting ? 'none' : 'auto';
-    });
-  }, { threshold: 0.1 });
-  stickyObserver.observe(checkoutEl);
-}
 </script>
 </body>
 </html>
