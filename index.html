@@ -1334,6 +1334,114 @@ footer a { color: var(--white-tertiary); text-decoration: none; }
 footer a:hover { color: var(--white-secondary); }
 
 /* ═══════════════════════════════════
+   STICKY MOBILE CTA BAR
+═══════════════════════════════════ */
+.sticky-mobile-cta {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(0,0,0,0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(34,197,94,0.2);
+  box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
+}
+
+.sticky-mobile-cta a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--green);
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 20px;
+  border-radius: 980px;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  width: 100%;
+}
+
+.sticky-mobile-cta .sticky-price {
+  background: rgba(0,0,0,0.2);
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .sticky-mobile-cta { display: block; }
+  body { padding-bottom: 80px; }
+}
+
+/* ═══════════════════════════════════
+   3 SECRETS SECTION
+═══════════════════════════════════ */
+.secrets-section {
+  padding: 120px 24px;
+  background: var(--near-black);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.secrets-grid {
+  max-width: 900px;
+  margin: 64px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .secrets-grid { grid-template-columns: 1fr; gap: 20px; }
+  .secrets-section { padding: 72px 20px; }
+}
+
+.secret-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.secret-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green), #0EA5E9);
+}
+
+.secret-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 16px;
+}
+
+.secret-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.secret-body {
+  font-size: 15px;
+  color: var(--white-secondary);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════
    STEP TRANSITION
 ═══════════════════════════════════ */
 #step2 { display: none; }
@@ -1549,12 +1657,12 @@ footer a:hover { color: var(--white-secondary); }
     </div>
   </div>
 
-  <!-- StatsReveal video from Remotion -->
-  <div class="stats-video-wrap reveal" style="margin-top:60px;">
+  <!-- StatsReveal video from Remotion — upload to /assets/stats-reveal.mp4 -->
+  <!-- <div class="stats-video-wrap reveal" style="margin-top:60px;">
     <video autoplay loop muted playsinline>
-      <source src="/Users/valilupoaie/Desktop/ca-remotion/out/stats-reveal.mp4" type="video/mp4">
+      <source src="/assets/stats-reveal.mp4" type="video/mp4">
     </video>
-  </div>
+  </div> -->
 </section>
 
 <!-- ══════════════════════
@@ -1787,13 +1895,14 @@ footer a:hover { color: var(--white-secondary); }
 ══════════════════════ -->
 <section class="flow-section">
   <div class="flow-inner">
-    <div class="reveal-scale">
+    <!-- System flow video — upload to /assets/system-flow.mp4 -->
+    <!-- <div class="reveal-scale">
       <div class="flow-video-wrap">
         <video autoplay loop muted playsinline>
-          <source src="/Users/valilupoaie/Desktop/ca-remotion/out/system-flow.mp4" type="video/mp4">
+          <source src="/assets/system-flow.mp4" type="video/mp4">
         </video>
       </div>
-    </div>
+    </div> -->
 
     <div class="flow-steps">
       <div class="reveal" style="margin-bottom:40px">
@@ -1855,7 +1964,7 @@ footer a:hover { color: var(--white-secondary); }
     <div class="testi-scroll stagger">
       <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Am intrat sceptic. Am ieșit cu 3 idei implementate a doua zi. CRM-ul cu AI scoring a schimbat complet cum gestionăm leadurile — rata de conversie a crescut de la 18% la 34% în 3 săptămâni."</p>
+        <p class="testi-quote">"Am intrat sceptic. Am ieșit cu 3 idei implementate a doua zi. CRM-ul cu AI scoring a schimbat complet cum gestionăm leadurile — <strong style="color:var(--white)">rata de conversie a crescut de la 18% la 34% în 3 săptămâni.</strong>"</p>
         <div class="testi-author">
           <div class="testi-avatar">A</div>
           <div>
@@ -1867,7 +1976,7 @@ footer a:hover { color: var(--white-secondary); }
 
       <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Vali nu te vinde cu promisiuni. Deschide sistemul real și-ți arată tot. Cel mai valoros 90 de minute raportat la preț pe care l-am trăit. Secvența de WhatsApp a adus 2 clienți noi în prima săptămână."</p>
+        <p class="testi-quote">"Vali nu te vinde cu promisiuni. Deschide sistemul real și-ți arată tot. Cel mai valoros 90 de minute raportat la preț pe care l-am trăit. <strong style="color:var(--white)">Secvența de WhatsApp a adus 2 clienți noi în prima săptămână.</strong>"</p>
         <div class="testi-author">
           <div class="testi-avatar">R</div>
           <div>
@@ -1879,7 +1988,7 @@ footer a:hover { color: var(--white-secondary); }
 
       <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Sistemul AI de campanii mi-a economisit 40 de ore pe lună. Nu mai plătesc agenție. Nu mai aștept brief-uri. În 30 de minute am campanie gata de lansare — și performează mai bine decât înainte."</p>
+        <p class="testi-quote">"<strong style="color:var(--white)">Sistemul AI de campanii mi-a economisit 40 de ore pe lună.</strong> Nu mai plătesc agenție. Nu mai aștept brief-uri. În 30 de minute am campanie gata de lansare — și performează mai bine decât înainte."</p>
         <div class="testi-author">
           <div class="testi-avatar">M</div>
           <div>
@@ -1906,6 +2015,32 @@ footer a:hover { color: var(--white-secondary); }
       La workshop nu primești un PowerPoint. Deschid sistemul în timp real — cum intră leadurile, cum sunt scorrate de AI, cum sunt contactate automat în 47 de secunde, cum se închid singure. Date reale. Clienți reali. Fără teorie.<br><br>
       <span style="color:var(--white-tertiary)">Tu decizi vineri seară dacă vrei același lucru în afacerea ta.</span>
     </p>
+  </div>
+</section>
+
+<!-- ══════════════════════
+     3 SECRETS
+══════════════════════ -->
+<section class="secrets-section">
+  <p class="section-eyebrow reveal">Ce vei vedea vineri seară</p>
+  <h2 class="section-headline reveal">3 lucruri pe care<br>nu ți le-a arătat nimeni live.</h2>
+
+  <div class="secrets-grid">
+    <div class="secret-card reveal">
+      <div class="secret-num">Secretul #1</div>
+      <h3 class="secret-title">De ce antreprenorii care fac 5.000€/lună pierd clienți premium în fiecare zi</h3>
+      <p class="secret-body">Și cum un sistem cu AI oprește asta automat — fără să angajezi mai multă lume sau să lucrezi mai mult.</p>
+    </div>
+    <div class="secret-card reveal" style="transition-delay:80ms">
+      <div class="secret-num">Secretul #2</div>
+      <h3 class="secret-title">Cum poți avea o echipă de vânzări care lucrează 24/7 — chiar dacă ești singur</h3>
+      <p class="secret-body">Sistemul care contactează, califică și urmărește leadurile automat. Tu supervizezi. AI execută.</p>
+    </div>
+    <div class="secret-card reveal" style="transition-delay:160ms">
+      <div class="secret-num">Secretul #3</div>
+      <h3 class="secret-title">De ce nu ai nevoie de experiență tehnică sau bugete mari ca să implementezi exact asta</h3>
+      <p class="secret-body">Dacă poți folosi WhatsApp și un laptop, poți lansa primul tău sistem AI de vânzări în 48 de ore de la workshop.</p>
+    </div>
   </div>
 </section>
 
@@ -2177,6 +2312,15 @@ footer a:hover { color: var(--white-secondary); }
 </footer>
 
 <!-- ══════════════════════
+     STICKY MOBILE CTA
+══════════════════════ -->
+<div class="sticky-mobile-cta" id="stickyCta">
+  <a href="#checkout">
+    DA, VREAU SĂ VĂD LIVE → <span class="sticky-price">17$</span>
+  </a>
+</div>
+
+<!-- ══════════════════════
      SCRIPTS
 ══════════════════════ -->
 <script>
@@ -2401,6 +2545,19 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+// ── Hide sticky CTA when checkout is visible ──
+const checkoutEl = document.getElementById('checkout');
+const stickyCta = document.getElementById('stickyCta');
+if (checkoutEl && stickyCta) {
+  const stickyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      stickyCta.style.opacity = e.isIntersecting ? '0' : '1';
+      stickyCta.style.pointerEvents = e.isIntersecting ? 'none' : 'auto';
+    });
+  }, { threshold: 0.1 });
+  stickyObserver.observe(checkoutEl);
+}
 </script>
 </body>
 </html>
